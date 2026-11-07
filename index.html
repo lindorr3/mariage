@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lindor & Zeynab — Invitation au mariage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+/* ============ Palette ============ */
+:root{
+  --ivory:#F8F3E9; --ivory2:#F1E8D6; --ink:#1E2B26;
+  --emerald:#0E3B31; --emerald2:#14503F;
+  --gold:#C6A052; --gold2:#E7CF8E; --gold3:#9C7A33;
+  --muted:#6B6A5E;
+  --star:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23C6A052' stroke-width='1' opacity='.55'%3E%3Crect x='16' y='16' width='24' height='24'/%3E%3Crect x='16' y='16' width='24' height='24' transform='rotate(45 28 28)'/%3E%3Cpath d='M0 28h8M48 28h8M28 0v8M28 48v8'/%3E%3C/g%3E%3C/svg%3E");
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Cormorant Garamond",Georgia,serif;color:var(--ink);background:var(--emerald);
+  background-image:var(--star);background-size:56px;-webkit-font-smoothing:antialiased;font-size:19px;line-height:1.55}
+body.locked{overflow:hidden}
+.arabic{font-family:"Amiri",serif;direction:rtl}
+.script{font-family:"Pinyon Script",cursive;font-weight:400}
+
+/* ============ Gate (portes) ============ */
+#gate{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 50% 40%,#1b5a48 0%,var(--emerald) 55%,#071f19 100%);
+  transition:opacity 1.2s ease 1.6s, visibility 0s linear 2.8s;perspective:1400px;overflow:hidden}
+#gate::before{content:"";position:absolute;inset:0;background-image:var(--star);background-size:56px;opacity:.35}
+#gate.open{opacity:0;visibility:hidden}
+.gate-top{position:relative;text-align:center;color:var(--gold2);margin-bottom:22px;padding:0 20px;z-index:2}
+.gate-top .arabic{font-size:26px;color:var(--gold2)}
+.gate-top .for{font-size:15px;letter-spacing:.25em;text-transform:uppercase;opacity:.8;margin-top:6px}
+.gate-top .guest{font-size:24px;font-style:italic;color:#fff;margin-top:2px;min-height:1px}
+.doorway{position:relative;width:min(78vw,340px);aspect-ratio:1/1.75;z-index:2}
+.doorway .frame{position:absolute;inset:-14px;border-radius:50% 50% 6px 6px / 32% 32% 6px 6px;
+  border:3px solid var(--gold);box-shadow:0 0 0 6px rgba(198,160,82,.18),0 0 60px rgba(231,207,142,.25), inset 0 0 0 2px rgba(231,207,142,.35)}
+.light{position:absolute;inset:0;border-radius:50% 50% 4px 4px / 32% 32% 4px 4px;
+  background:radial-gradient(ellipse at 50% 45%,#fffaf0 0%,#f7e6b8 35%,#d9b56a 70%,#a07d35 100%);
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+.light .arabic{font-size:30px;color:var(--emerald);opacity:0;transform:scale(.9);transition:all 1.2s ease .5s}
+#gate.open .light .arabic{opacity:1;transform:scale(1)}
+.leaf{position:absolute;top:0;bottom:0;width:50%;transform-style:preserve-3d;
+  transition:transform 2.2s cubic-bezier(.65,0,.25,1);
+  background:linear-gradient(160deg,#e9cf8a 0%,#c79f4f 35%,#a8823a 60%,#d6b66b 100%);
+  box-shadow:inset 0 0 0 2px rgba(255,240,200,.5), inset 0 0 30px rgba(90,60,10,.45)}
+.leaf::before{content:"";position:absolute;inset:14px;border:1.5px solid rgba(255,244,214,.75);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23FFF4D6' stroke-width='.9' opacity='.6'%3E%3Crect x='11' y='11' width='18' height='18'/%3E%3Crect x='11' y='11' width='18' height='18' transform='rotate(45 20 20)'/%3E%3Ccircle cx='20' cy='20' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:40px}
+.leaf.l{left:0;transform-origin:left center;border-radius:100% 0 0 0 / 64% 0 0 0}
+.leaf.r{right:0;transform-origin:right center;border-radius:0 100% 0 0 / 0 64% 0 0}
+.leaf.l::before{border-radius:100% 0 0 0 / 64% 0 0 0;border-right:none}
+.leaf.r::before{border-radius:0 100% 0 0 / 0 64% 0 0;border-left:none}
+.knob{position:absolute;top:56%;width:22px;height:22px;border-radius:50%;border:3px solid #fff1cc;
+  box-shadow:0 2px 6px rgba(0,0,0,.35);background:radial-gradient(circle,#b48a3c,#7d5d22)}
+.leaf.l .knob{right:10px}.leaf.r .knob{left:10px}
+.medal{position:absolute;top:30%;width:46px;height:46px;transform:rotate(45deg);border:1.5px solid #fff4d6;background:rgba(255,244,214,.18)}
+.medal::after{content:"";position:absolute;inset:-1.5px;border:1.5px solid #fff4d6;transform:rotate(45deg)}
+.leaf.l .medal{right:-23px}.leaf.r .medal{left:-23px;display:none}
+#gate.open .leaf.l{transform:rotateY(-108deg)}
+#gate.open .leaf.r{transform:rotateY(108deg)}
+.tap{position:relative;z-index:2;margin-top:34px;color:var(--gold2);font-size:15px;letter-spacing:.3em;text-transform:uppercase;
+  background:none;border:1px solid rgba(231,207,142,.5);padding:12px 26px;border-radius:40px;cursor:pointer;font-family:inherit;
+  animation:pulse 2.4s ease-in-out infinite}
+#gate.open .tap{opacity:0}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(231,207,142,.35)}50%{box-shadow:0 0 0 12px rgba(231,207,142,0)}}
+#dust{position:absolute;inset:0;z-index:1;pointer-events:none}
+
+/* ============ Page ============ */
+main{max-width:520px;margin:0 auto;background:var(--ivory);min-height:100vh;position:relative;
+  box-shadow:0 0 80px rgba(0,0,0,.4)}
+section{padding:64px 30px;text-align:center;position:relative}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 1s ease,transform 1s ease}
+.reveal.in{opacity:1;transform:none}
+.divider{display:flex;align-items:center;justify-content:center;gap:12px;margin:22px auto;color:var(--gold)}
+.divider::before,.divider::after{content:"";height:1px;width:70px;background:linear-gradient(90deg,transparent,var(--gold))}
+.divider::after{transform:scaleX(-1)}
+.divider svg{width:18px;height:18px}
+.eyebrow{font-size:13px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold3)}
+h2{font-family:"Pinyon Script",cursive;font-weight:400;font-size:46px;color:var(--emerald);line-height:1.1;margin:6px 0 4px}
+
+/* hero */
+.hero{padding:0;color:var(--ivory);background:var(--emerald);overflow:hidden}
+.hero-inner{position:relative;padding:72px 28px 64px;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+.hero-inner::before{content:"";position:absolute;inset:0;background-image:var(--star);background-size:56px;opacity:.28}
+.arch{position:relative;margin:0 auto;width:100%;max-width:380px;padding:56px 22px 44px;
+  border:1.5px solid var(--gold);border-radius:50% 50% 8px 8px / 26% 26% 8px 8px;
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0))}
+.arch::after{content:"";position:absolute;inset:8px;border:1px solid rgba(198,160,82,.45);border-radius:50% 50% 4px 4px / 25% 25% 4px 4px;pointer-events:none}
+.bism{font-size:30px;color:var(--gold2);line-height:1.6}
+.hero .lead{font-size:15px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold2);opacity:.85;margin-top:18px}
+.names{font-family:"Pinyon Script",cursive;font-size:clamp(58px,17vw,84px);line-height:1;color:#fff;margin:18px 0 6px;
+  text-shadow:0 2px 30px rgba(231,207,142,.35)}
+.names .amp{display:block;font-family:"Cormorant Garamond",serif;font-style:italic;font-size:30px;color:var(--gold2);margin:6px 0}
+.hero .date{font-size:20px;letter-spacing:.12em;color:var(--gold2);margin-top:14px}
+.hero .guestline{margin-top:20px;font-style:italic;font-size:19px;color:#f3ead6}
+.scroll-hint{margin-top:40px;color:var(--gold2);font-size:13px;letter-spacing:.3em;text-transform:uppercase;opacity:.7}
+.scroll-hint span{display:block;margin:10px auto 0;width:1px;height:38px;background:linear-gradient(var(--gold2),transparent);animation:drop 2s infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* verse */
+.verse .arabic{font-size:25px;line-height:2.1;color:var(--emerald)}
+.verse .fr{font-style:italic;font-size:19px;color:var(--muted);margin-top:14px}
+.verse .ref{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold3);margin-top:12px}
+
+/* message */
+.message p{font-size:20px}
+.families{margin-top:18px;font-style:italic;color:var(--muted)}
+
+/* countdown */
+.count{background:var(--ivory2)}
+.cd{display:flex;justify-content:center;gap:12px;margin-top:18px}
+.cd div{width:72px;padding:14px 0 10px;border:1px solid var(--gold);border-radius:38px 38px 6px 6px;background:var(--ivory)}
+.cd b{display:block;font-size:32px;font-weight:500;color:var(--emerald);line-height:1}
+.cd small{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold3)}
+
+/* programme */
+.event{position:relative;margin:26px auto 0;padding:30px 22px 26px;border:1px solid rgba(198,160,82,.6);border-radius:120px 120px 10px 10px / 60px 60px 10px 10px;background:#fffdf8}
+.event .num{position:absolute;top:-17px;left:50%;transform:translateX(-50%) rotate(45deg);width:34px;height:34px;background:var(--emerald);border:1.5px solid var(--gold)}
+.event .num span{display:block;transform:rotate(-45deg);color:var(--gold2);font-size:16px;line-height:31px}
+.event h3{font-family:"Pinyon Script",cursive;font-weight:400;font-size:38px;color:var(--emerald);line-height:1.1}
+.event .sub{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold3)}
+.event .when{font-size:20px;margin-top:12px}
+.event .where{color:var(--muted);font-size:18px}
+.tbc{font-style:italic;color:var(--muted)}
+.btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:15px;letter-spacing:.12em;text-transform:uppercase;
+  padding:11px 20px;border-radius:40px;border:1px solid var(--emerald);color:var(--emerald);background:transparent;text-decoration:none;cursor:pointer}
+.btn.solid{background:var(--emerald);color:var(--gold2);border-color:var(--emerald)}
+.btn.gold{background:linear-gradient(135deg,var(--gold2),var(--gold));color:var(--emerald);border-color:var(--gold)}
+.btn svg{width:18px;height:18px}
+
+/* infos */
+.infos{background:var(--emerald);color:var(--ivory)}
+.infos h2{color:var(--gold2)}
+.infos .eyebrow{color:var(--gold2)}
+.info{margin-top:22px}
+.info h4{font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);font-weight:500}
+.info p{font-size:19px;color:#efe6d2}
+
+/* gallery */
+.gal{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 14px;margin-top:18px}
+.gal img{flex:0 0 78%;scroll-snap-align:center;border-radius:120px 120px 8px 8px / 70px 70px 8px 8px;border:1.5px solid var(--gold);aspect-ratio:3/4;object-fit:cover}
+
+/* rsvp */
+.rsvp{background:var(--ivory2)}
+form{text-align:left;margin-top:22px}
+label.f{display:block;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold3);margin:18px 0 6px}
+input[type=text],input[type=number],select,textarea{width:100%;font-family:inherit;font-size:19px;padding:12px 14px;border:1px solid rgba(198,160,82,.7);
+  border-radius:8px;background:#fffdf8;color:var(--ink);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--emerald);box-shadow:0 0 0 3px rgba(14,59,49,.12)}
+textarea{min-height:96px;resize:vertical}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice label{display:block;text-align:center;padding:14px 8px;border:1px solid rgba(198,160,82,.7);border-radius:8px;background:#fffdf8;cursor:pointer;font-size:18px;line-height:1.25}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice input:checked+label{background:var(--emerald);color:var(--gold2);border-color:var(--emerald)}
+.checks label{display:flex;gap:10px;align-items:center;font-size:18px;margin:6px 0}
+.checks input{width:18px;height:18px;accent-color:var(--emerald)}
+.send{display:grid;gap:10px;margin-top:24px}
+.send .btn{justify-content:center;width:100%}
+.note{font-size:16px;color:var(--muted);text-align:center;margin-top:12px;font-style:italic}
+.thanks{display:none;margin-top:18px;padding:16px;border:1px solid var(--gold);border-radius:8px;background:#fffdf8;text-align:center}
+.thanks.show{display:block}
+
+/* footer */
+footer{background:var(--emerald);color:var(--gold2);text-align:center;padding:60px 28px 70px}
+footer .arabic{font-size:24px;line-height:1.9}
+footer .fr{font-style:italic;color:#efe6d2;margin-top:8px}
+footer .sign{font-family:"Pinyon Script",cursive;font-size:44px;color:#fff;margin-top:24px}
+
+/* organisateurs */
+#admin{display:none;max-width:760px;margin:0 auto;background:var(--ivory);min-height:100vh;padding:40px 24px 80px}
+body.admin #admin{display:block}
+body.admin main, body.admin #gate{display:none}
+#admin h1{font-family:"Pinyon Script",cursive;font-weight:400;font-size:48px;color:var(--emerald)}
+#admin .card{background:#fffdf8;border:1px solid rgba(198,160,82,.6);border-radius:10px;padding:20px;margin-top:20px}
+#admin h3{font-size:14px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold3);font-weight:600}
+#admin .row{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+#admin .out{word-break:break-all;font-size:15px;background:var(--ivory2);padding:12px;border-radius:8px;margin-top:10px;white-space:pre-wrap}
+#admin table{width:100%;border-collapse:collapse;margin-top:14px;font-size:16px}
+#admin td,#admin th{border-bottom:1px solid rgba(198,160,82,.4);padding:8px 6px;text-align:left;vertical-align:middle}
+#admin .mini{font-size:12px;padding:7px 12px;letter-spacing:.08em}
+.warn{font-size:15px;color:#8a5a12;background:#fbf0d4;border-radius:8px;padding:10px 12px;margin-top:12px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);background:var(--emerald);color:var(--gold2);
+  padding:12px 20px;border-radius:30px;transition:transform .35s;z-index:99;font-size:16px;visibility:hidden}
+.toast.show{transform:translateX(-50%) translateY(0);visibility:visible}
+.sound{position:fixed;right:16px;bottom:16px;z-index:60;width:48px;height:48px;border-radius:50%;border:1px solid var(--gold);
+  background:rgba(14,59,49,.92);color:var(--gold2);display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.3)}
+.sound.on{display:flex}.sound svg{width:22px;height:22px}
+.sound .off{display:none}.sound.muted .off{display:block}.sound.muted .onI{display:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.leaf{transition-duration:.6s}}
+</style>
+</head>
+<body class="locked">
+
+<!-- ======================= PORTES ======================= -->
+<div id="gate" aria-label="Invitation — touchez pour ouvrir">
+  <canvas id="dust"></canvas>
+  <div class="gate-top">
+    <div class="arabic">بِسْمِ اللَّهِ</div>
+    <div class="for" id="gateFor" hidden>Invitation pour</div>
+    <div class="guest" id="gateGuest"></div>
+  </div>
+  <div class="doorway" id="doorway">
+    <div class="frame"></div>
+    <div class="light"><div class="arabic">مَا شَاءَ اللَّه</div></div>
+    <div class="leaf l"><div class="knob"></div></div>
+    <div class="leaf r"><div class="knob"></div></div>
+  </div>
+  <button class="tap" id="openBtn">Touchez pour ouvrir</button>
+</div>
+
+<!-- ======================= INVITATION ======================= -->
+<main id="top">
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="arch reveal">
+        <div class="bism arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+        <div class="lead">Avec la bénédiction d'Allah<br>et de nos familles</div>
+        <div class="names"><span id="nGroom"></span><span class="amp">&amp;</span><span id="nBride"></span></div>
+        <div class="lead" style="margin-top:6px">vous invitent à célébrer leur union</div>
+        <div class="date" id="heroDate"></div>
+        <div class="guestline" id="heroGuest"></div>
+      </div>
+      <div class="scroll-hint">Découvrir<span></span></div>
+    </div>
+  </section>
+
+  <section class="verse reveal">
+    <div class="divider"><svg viewBox="0 0 20 20"><g fill="none" stroke="currentColor"><rect x="5" y="5" width="10" height="10"/><rect x="5" y="5" width="10" height="10" transform="rotate(45 10 10)"/></g></svg></div>
+    <p class="arabic">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
+    <p class="fr">« Et parmi Ses signes, Il a créé pour vous, de vous-mêmes, des épouses afin que vous trouviez auprès d'elles la quiétude, et Il a mis entre vous affection et miséricorde. »</p>
+    <p class="ref">Sourate Ar-Rûm · 30:21</p>
+    <div class="divider"><svg viewBox="0 0 20 20"><g fill="none" stroke="currentColor"><rect x="5" y="5" width="10" height="10"/><rect x="5" y="5" width="10" height="10" transform="rotate(45 10 10)"/></g></svg></div>
+  </section>
+
+  <section class="message reveal">
+    <div class="eyebrow">Assalamou alaykoum</div>
+    <h2>Notre union</h2>
+    <p id="msgText"></p>
+    <p class="families" id="families"></p>
+  </section>
+
+  <section class="count reveal" id="countSec" hidden>
+    <div class="eyebrow">Le grand jour approche</div>
+    <h2>Compte à rebours</h2>
+    <div class="cd"><div><b id="cdD">0</b><small>jours</small></div><div><b id="cdH">0</b><small>heures</small></div><div><b id="cdM">0</b><small>min</small></div><div><b id="cdS">0</b><small>sec</small></div></div>
+  </section>
+
+  <section class="reveal" id="photosSec" hidden>
+    <div class="eyebrow">Nous deux</div>
+    <h2>Souvenirs</h2>
+    <div class="gal" id="gal"></div>
+  </section>
+
+  <section class="program">
+    <div class="eyebrow reveal">Le programme</div>
+    <h2 class="reveal">Les célébrations</h2>
+    <div id="events"></div>
+  </section>
+
+  <section class="infos reveal" id="infosSec">
+    <div class="eyebrow">Bon à savoir</div>
+    <h2>Informations</h2>
+    <div id="infos"></div>
+  </section>
+
+  <section class="rsvp reveal" id="rsvp">
+    <div class="eyebrow" id="rsvpEyebrow">Merci de répondre</div>
+    <h2>Votre réponse</h2>
+    <form id="rsvpForm" autocomplete="off">
+      <label class="f" for="rName">Votre nom</label>
+      <input type="text" id="rName" placeholder="Prénom et nom">
+      <label class="f">Serez-vous présent(e) ?</label>
+      <div class="choice">
+        <input type="radio" name="att" id="attY" value="yes" checked><label for="attY">Oui, avec joie<br><small>in shā' Allah</small></label>
+        <input type="radio" name="att" id="attN" value="no"><label for="attN">Malheureusement<br><small>je ne pourrai pas</small></label>
+      </div>
+      <div id="yesBlock">
+        <label class="f" for="rCount">Nombre de personnes</label>
+        <select id="rCount"></select>
+        <div id="evChecksWrap" hidden>
+          <label class="f">Je serai présent(e) à</label>
+          <div class="checks" id="evChecks"></div>
+        </div>
+        <label class="f" for="rDiet">Allergies ou régime particulier</label>
+        <input type="text" id="rDiet" placeholder="Facultatif">
+      </div>
+      <label class="f" for="rMsg">Un mot ou une dou'a pour les mariés</label>
+      <textarea id="rMsg" placeholder="Facultatif"></textarea>
+      <div class="send">
+        <a class="btn solid" id="sendWa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>Répondre par WhatsApp</a>
+        <a class="btn" id="sendMail" target="_blank" rel="noopener" hidden>Répondre par e-mail</a>
+      </div>
+      <p class="note" id="sendNote"></p>
+      <div class="thanks" id="thanks">Jazākum Allāhu khayran 🤍<br><small>Votre message s'est ouvert dans votre application : pensez à appuyer sur « Envoyer ».</small></div>
+    </form>
+  </section>
+
+  <footer class="reveal">
+    <p class="arabic">بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ</p>
+    <p class="fr">« Qu'Allah vous bénisse, répande Ses bénédictions sur vous et vous unisse dans le bien. »</p>
+    <div class="sign" id="footSign"></div>
+  </footer>
+</main>
+
+<!-- ======================= ESPACE ORGANISATEURS (#organisateurs) ======================= -->
+<div id="admin">
+  <h1>Espace des mariés</h1>
+  <p>Génère ici le lien personnel de chaque invité, puis envoie-le par WhatsApp ou par e-mail.</p>
+  <div class="warn" id="urlWarn" hidden>L'adresse publique de l'invitation n'est pas encore renseignée (CONFIG.url). Les liens générés ne fonctionneront pas tant qu'elle manque.</div>
+
+  <div class="card">
+    <h3>Un invité</h3>
+    <div class="row">
+      <div><label class="f" for="aName">Nom affiché</label><input type="text" id="aName" placeholder="ex. Famille Diop · Tonton Ibrahima"></div>
+      <div><label class="f" for="aSeats">Places</label><input type="number" id="aSeats" min="1" max="20" value="2"></div>
+    </div>
+    <label class="f">Invité(e) à</label>
+    <div class="checks" id="aEvents"></div>
+    <label class="f" for="aTpl">Message</label>
+    <textarea id="aTpl"></textarea>
+    <div class="out" id="aOut"></div>
+    <div class="btns" style="justify-content:flex-start">
+      <button class="btn solid" id="aCopy" type="button">Copier le message</button>
+      <a class="btn" id="aWa" target="_blank" rel="noopener">Ouvrir WhatsApp</a>
+      <a class="btn" id="aMail" target="_blank" rel="noopener">E-mail</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Toute une liste d'un coup</h3>
+    <p style="font-size:16px;color:var(--muted)">Une ligne par invitation : <b>Nom ; places ; événements</b> (événements facultatifs, ex. <code>1,2</code>). Tu peux coller directement depuis Excel / Google Sheets (colonnes séparées par tabulation).</p>
+    <textarea id="bulk" style="min-height:140px" placeholder="Famille Diop ; 4&#10;Awa Ndiaye ; 1 ; 2&#10;Oncle Ibrahima ; 2 ; 1,2"></textarea>
+    <div class="btns" style="justify-content:flex-start"><button class="btn solid" type="button" id="bulkGo">Générer les liens</button><button class="btn" type="button" id="bulkCsv">Copier en tableau (pour Excel)</button></div>
+    <table id="bulkTable"></table>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<audio id="bg" loop preload="auto"></audio>
+<button class="sound" id="soundBtn" aria-label="Couper ou remettre le son">
+  <svg class="onI" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>
+  <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9l6 6M22 9l-6 6"/></svg>
+</button>
+
+<script>
+/* =====================================================================
+   CONFIGURATION — tout ce qui est "" ou null est masqué / affiché "à confirmer"
+   ===================================================================== */
+const CONFIG = {
+  marie: "Lindor",
+  mariee: "Zeynab",
+  familles: "",                    // ex. "Les familles Fall et ..."
+  message: "C'est avec une immense joie et beaucoup de gratitude envers Allah que nous vous annonçons notre mariage. Votre présence et vos prières seront le plus beau des cadeaux.",
+  // Date principale (sert au compte à rebours) — format "2027-05-15T15:00"
+  date: null,
+  events: [
+    { id: 1, titre: "Nikah", sous: "Cérémonie religieuse", date: null, fin: null, lieu: "", adresse: "", maps: "" },
+    { id: 2, titre: "Walima", sous: "Réception", date: null, fin: null, lieu: "", adresse: "", maps: "" }
+  ],
+  repondreAvant: null,             // ex. "2027-04-15"
+  infos: [
+    { t: "Tenue", d: "" },
+    { t: "Hébergement", d: "" },
+    { t: "Contact", d: "" }
+  ],
+  whatsapp: "",                    // numéro des mariés au format international sans + ni espaces, ex. "221770000000"
+  email: "",                       // adresse pour les réponses par e-mail
+  photos: [],
+  audio: "",                       // fond sonore : "audio.mp3" (sur GitHub) ou data:URI — vide = pas de son                      // images en data:URI (ajoutées plus tard)
+  url: "https://claude.ai/artifact/LGcobK4t1ngnC5xmDcd2ze"  // adresse publique de cette invitation (lien claude.ai)
+};
+/* ===================================================================== */
+
+const $ = s => document.querySelector(s);
+const fmtDate = (iso, withTime=true) => {
+  if (!iso) return "";
+  const d = new Date(iso);
+  let s = d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  if (withTime && /T\d/.test(iso)) s += " · " + d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}).replace(":","h");
+  return s.charAt(0).toUpperCase()+s.slice(1);
+};
+const toast = m => { const t=$("#toast"); t.textContent=m; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2200); };
+
+/* ---------- Lien personnel : #i-<places>-<événements>-<nom en hexadécimal> ---------- */
+const hexEnc = s => Array.from(new TextEncoder().encode(s)).map(b=>b.toString(16).padStart(2,"0")).join("");
+const hexDec = h => { try { return new TextDecoder().decode(new Uint8Array(h.match(/../g).map(x=>parseInt(x,16)))); } catch(e){ return ""; } };
+function parseInvite(hash){
+  const m = /^#i-(\d{1,2})-(\d{1,3})-([0-9a-f]+)$/.exec(hash||"");
+  if (!m) return null;
+  return { seats: Math.max(1,+m[1]), mask: +m[2], name: hexDec(m[3]) };
+}
+function makeLink(name, seats, mask){
+  return BASE + "#i-" + seats + "-" + mask + "-" + hexEnc(name.trim());
+}
+const BASE = (location.protocol==="file:" || /claude/.test(location.hostname)) ? (CONFIG.url||"[lien-de-l-invitation]") : location.href.split("#")[0];
+const allMask = () => CONFIG.events.reduce((a,e)=>a|(1<<(e.id-1)),0);
+
+/* ---------- Rendu de l'invitation ---------- */
+function render(){
+  const inv = parseInvite(location.hash);
+  const mask = inv ? (inv.mask || allMask()) : allMask();
+  const evs = CONFIG.events.filter(e => mask & (1<<(e.id-1)));
+
+  $("#nGroom").textContent = CONFIG.marie; $("#nBride").textContent = CONFIG.mariee;
+  $("#footSign").textContent = CONFIG.marie + " & " + CONFIG.mariee;
+  $("#heroDate").textContent = CONFIG.date ? fmtDate(CONFIG.date,false) : "";
+  $("#msgText").textContent = CONFIG.message;
+  $("#families").textContent = CONFIG.familles;
+  if (inv && inv.name){
+    $("#gateFor").hidden = false; $("#gateGuest").textContent = inv.name;
+    $("#heroGuest").textContent = "À l'attention de " + inv.name;
+    $("#rName").value = inv.name;
+  }
+
+  // compte à rebours
+  if (CONFIG.date){ $("#countSec").hidden=false; tick(); setInterval(tick,1000); }
+
+  // photos
+  if (CONFIG.photos.length){ $("#photosSec").hidden=false; $("#gal").innerHTML = CONFIG.photos.map(p=>`<img src="${p}" alt="">`).join(""); }
+
+  // programme
+  $("#events").innerHTML = evs.map((e,i)=>{
+    const when = e.date ? fmtDate(e.date) : `<span class="tbc">Date et heure communiquées prochainement</span>`;
+    const where = e.lieu ? `<div class="where">${esc(e.lieu)}${e.adresse?"<br>"+esc(e.adresse):""}</div>` : `<div class="where tbc">Lieu à confirmer</div>`;
+    const maps = e.maps || (e.adresse ? "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(e.lieu+" "+e.adresse) : "");
+    const cal = e.date ? gcal(e) : "";
+    return `<div class="event reveal"><div class="num"><span>${i+1}</span></div>
+      <div class="sub">${esc(e.sous)}</div><h3>${esc(e.titre)}</h3>
+      <div class="when">${when}</div>${where}
+      <div class="btns">${maps?`<a class="btn" href="${maps}" target="_blank" rel="noopener">Itinéraire</a>`:""}${cal?`<a class="btn" href="${cal}" target="_blank" rel="noopener">Ajouter à l'agenda</a>`:""}</div></div>`;
+  }).join("");
+
+  // infos
+  const infos = CONFIG.infos.filter(x=>x.d);
+  if (CONFIG.repondreAvant) infos.unshift({t:"Réponse souhaitée avant le", d: fmtDate(CONFIG.repondreAvant,false)});
+  if (infos.length) $("#infos").innerHTML = infos.map(x=>`<div class="info"><h4>${esc(x.t)}</h4><p>${esc(x.d)}</p></div>`).join("");
+  else $("#infosSec").hidden = true;
+  if (CONFIG.repondreAvant) $("#rsvpEyebrow").textContent = "Merci de répondre avant le " + fmtDate(CONFIG.repondreAvant,false).toLowerCase();
+
+  // RSVP
+  const max = inv ? inv.seats : 10;
+  $("#rCount").innerHTML = Array.from({length:max},(_,i)=>`<option value="${i+1}" ${i+1===max&&inv?"selected":""}>${i+1} ${i?"personnes":"personne"}</option>`).join("");
+  if (evs.length>1){ $("#evChecksWrap").hidden=false; $("#evChecks").innerHTML = evs.map(e=>`<label><input type="checkbox" value="${esc(e.titre)}" checked> ${esc(e.titre)} — ${esc(e.sous)}</label>`).join(""); }
+  if (CONFIG.email) $("#sendMail").hidden = false;
+  $("#sendNote").textContent = CONFIG.whatsapp ? "Votre réponse s'ouvre dans WhatsApp, prête à être envoyée aux mariés." : "Votre réponse s'ouvre dans WhatsApp : choisissez Lindor ou Zeynab comme destinataire.";
+  ["input","change"].forEach(ev=>$("#rsvpForm").addEventListener(ev, updateRsvp));
+  updateRsvp();
+  observe();
+}
+function esc(s){ return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function gcal(e){
+  const f = d => new Date(d).toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,"");
+  const end = e.fin || new Date(new Date(e.date).getTime()+3*3600e3).toISOString();
+  return "https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(`${e.titre} — ${CONFIG.marie} & ${CONFIG.mariee}`)+
+    "&dates="+f(e.date)+"/"+f(end)+"&location="+encodeURIComponent([e.lieu,e.adresse].filter(Boolean).join(", "));
+}
+function tick(){
+  let s = Math.max(0,(new Date(CONFIG.date)-new Date())/1000);
+  const d=Math.floor(s/86400); s-=d*86400; const h=Math.floor(s/3600); s-=h*3600; const m=Math.floor(s/60); s=Math.floor(s-m*60);
+  $("#cdD").textContent=d; $("#cdH").textContent=h; $("#cdM").textContent=m; $("#cdS").textContent=s;
+}
+function rsvpText(){
+  const yes = $("#attY").checked, name = $("#rName").value.trim() || "(nom non précisé)";
+  const lines = [`💍 Réponse — mariage de ${CONFIG.marie} & ${CONFIG.mariee}`, ``, `Nom : ${name}`];
+  if (yes){
+    lines.push(`Présence : ✅ Oui, in shā' Allah`, `Nombre de personnes : ${$("#rCount").value}`);
+    const ch = [...document.querySelectorAll("#evChecks input")];
+    if (ch.length) lines.push(`Présent(e) à : ${ch.filter(c=>c.checked).map(c=>c.value).join(", ")||"—"}`);
+    if ($("#rDiet").value.trim()) lines.push(`Régime / allergies : ${$("#rDiet").value.trim()}`);
+  } else lines.push(`Présence : ❌ Ne pourra pas venir`);
+  if ($("#rMsg").value.trim()) lines.push(``, `Message : ${$("#rMsg").value.trim()}`);
+  return lines.join("\n");
+}
+function updateRsvp(){
+  $("#yesBlock").style.display = $("#attY").checked ? "" : "none";
+  const t = rsvpText();
+  $("#sendWa").href = "https://wa.me/" + (CONFIG.whatsapp||"") + "?text=" + encodeURIComponent(t);
+  if (CONFIG.email) $("#sendMail").href = "mailto:"+CONFIG.email+"?subject="+encodeURIComponent("Réponse — mariage "+CONFIG.marie+" & "+CONFIG.mariee)+"&body="+encodeURIComponent(t);
+}
+["#sendWa","#sendMail"].forEach(s=>$(s).addEventListener("click",()=>setTimeout(()=>$("#thanks").classList.add("show"),400)));
+
+function observe(){
+  const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} }),{threshold:.15});
+  document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+}
+
+/* ---------- Ouverture des portes + poussière d'or ---------- */
+function startSound(){
+  if (!CONFIG.audio) return;
+  const a=$("#bg"); if (!a.src) a.src=CONFIG.audio; a.volume=0;
+  a.play().then(()=>{ $("#soundBtn").classList.add("on"); let v=0; const t=setInterval(()=>{ v=Math.min(.7,v+.05); a.volume=v; if(v>=.7) clearInterval(t); },150); })
+    .catch(()=>{ $("#soundBtn").classList.add("on","muted"); });
+}
+$("#soundBtn").addEventListener("click",()=>{ const a=$("#bg"), b=$("#soundBtn");
+  if (a.paused){ a.volume=.7; a.play().then(()=>b.classList.remove("muted")).catch(()=>{}); } else { a.pause(); b.classList.add("muted"); } });
+document.addEventListener("visibilitychange",()=>{ const a=$("#bg"); if(document.hidden && !a.paused){ a.pause(); a.dataset.resume="1"; } else if(!document.hidden && a.dataset.resume){ delete a.dataset.resume; a.play().catch(()=>{}); } });
+let opened=false;
+function openGate(){
+  if (opened) return; opened=true; startSound();
+  $("#gate").classList.add("open"); document.body.classList.remove("locked");
+  setTimeout(()=>{ document.querySelector(".hero .reveal").classList.add("in"); }, 1900);
+}
+$("#openBtn").addEventListener("click", openGate);
+$("#doorway").addEventListener("click", openGate);
+(function dust(){
+  const c=$("#dust"), x=c.getContext("2d"); let W,H,P=[];
+  const rs=()=>{ W=c.width=innerWidth*devicePixelRatio; H=c.height=innerHeight*devicePixelRatio; }; rs(); addEventListener("resize",rs);
+  for(let i=0;i<70;i++) P.push({x:Math.random(),y:Math.random(),r:Math.random()*1.8+.4,v:Math.random()*.0006+.0002,a:Math.random()*Math.PI*2});
+  (function f(){ if($("#gate").classList.contains("open") && getComputedStyle($("#gate")).visibility==="hidden") return;
+    x.clearRect(0,0,W,H);
+    P.forEach(p=>{ p.y-=p.v; p.a+=.02; if(p.y<0)p.y=1; const o=.35+.35*Math.sin(p.a);
+      x.beginPath(); x.arc(p.x*W+Math.sin(p.a)*6,p.y*H,p.r*devicePixelRatio,0,7); x.fillStyle=`rgba(231,207,142,${o})`; x.fill(); });
+    requestAnimationFrame(f); })();
+})();
+
+/* ---------- Espace organisateurs ---------- */
+function admin(){
+  document.body.classList.add("admin"); document.body.classList.remove("locked");
+  $("#urlWarn").hidden = !BASE.startsWith("[");
+  $("#aEvents").innerHTML = CONFIG.events.map(e=>`<label><input type="checkbox" value="${e.id}" checked> ${esc(e.titre)} — ${esc(e.sous)}</label>`).join("");
+  $("#aTpl").value = "Assalamou alaykoum {nom} 🌙\n\nAvec la grâce d'Allah, Lindor & Zeynab ont la joie de vous inviter à leur mariage.\n\nVotre invitation personnelle (à ouvrir) :\n{lien}\n\nMerci de nous confirmer votre présence directement depuis l'invitation. Barakallahou fikoum 🤍";
+  const upd = () => {
+    const name=$("#aName").value.trim()||"Invité", seats=Math.min(20,Math.max(1,+$("#aSeats").value||1));
+    const mask=[...$("#aEvents").querySelectorAll("input:checked")].reduce((a,c)=>a|(1<<(c.value-1)),0)||allMask();
+    const msg=$("#aTpl").value.replace(/\{nom\}/g,name).replace(/\{lien\}/g,makeLink(name,seats,mask));
+    $("#aOut").textContent=msg; $("#aWa").href="https://wa.me/?text="+encodeURIComponent(msg);
+    $("#aMail").href="mailto:?subject="+encodeURIComponent("Invitation — mariage de Lindor & Zeynab")+"&body="+encodeURIComponent(msg);
+  };
+  ["#aName","#aSeats","#aTpl","#aEvents"].forEach(s=>{$(s).addEventListener("input",upd);$(s).addEventListener("change",upd);}); upd();
+  $("#aCopy").addEventListener("click",()=>copy($("#aOut").textContent));
+  let rows=[];
+  $("#bulkGo").addEventListener("click",()=>{
+    rows = $("#bulk").value.split("\n").map(l=>l.trim()).filter(Boolean).map(l=>{
+      const p=l.split(/\t|;/).map(s=>s.trim()); const name=p[0]; const seats=Math.min(20,Math.max(1,parseInt(p[1])||1));
+      const evs=(p[2]||"").split(/[,\s]+/).map(Number).filter(n=>n>0&&n<=CONFIG.events.length);
+      const mask=evs.length?evs.reduce((a,n)=>a|(1<<(n-1)),0):allMask();
+      const link=makeLink(name,seats,mask); const msg=$("#aTpl").value.replace(/\{nom\}/g,name).replace(/\{lien\}/g,link);
+      return {name,seats,mask,link,msg};
+    });
+    $("#bulkTable").innerHTML = "<tr><th>Invité</th><th>Places</th><th></th></tr>"+rows.map((r,i)=>`<tr><td>${esc(r.name)}</td><td>${r.seats}</td>
+      <td style="white-space:nowrap"><a class="btn mini solid" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(r.msg)}">WhatsApp</a>
+      <button class="btn mini" type="button" data-i="${i}">Copier</button></td></tr>`).join("");
+    $("#bulkTable").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>copy(rows[b.dataset.i].msg)));
+  });
+  $("#bulkCsv").addEventListener("click",()=>copy("Nom\tPlaces\tLien\n"+rows.map(r=>`${r.name}\t${r.seats}\t${r.link}`).join("\n")));
+}
+async function copy(t){ try{ await navigator.clipboard.writeText(t); toast("Copié ✓"); }catch(e){ toast("Copie refusée : sélectionne le texte à la main"); } }
+
+addEventListener("hashchange",()=>location.reload());
+if (location.hash === "#organisateurs") admin(); else render();
+</script>
+</body>
+</html>
