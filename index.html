@@ -447,7 +447,7 @@ function parseInvite(hash){
 function makeLink(name, seats, mask){
   return BASE + "#i-" + seats + "-" + mask + "-" + hexEnc(name.trim());
 }
-const BASE = (location.protocol==="file:" || /claude/.test(location.hostname)) ? (CONFIG.url||"[lien-de-l-invitation]") : location.href.split("#")[0];
+const BASE = CONFIG.url || (/^https?:$/.test(location.protocol) && !/claude/.test(location.hostname) ? location.href.split("#")[0] : "[lien-de-l-invitation]");
 const allMask = () => CONFIG.events.reduce((a,e)=>a|(1<<(e.id-1)),0);
 
 /* ---------- Rendu de l'invitation ---------- */
