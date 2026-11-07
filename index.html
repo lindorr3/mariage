@@ -190,7 +190,26 @@ body.admin main, body.admin #gate{display:none}
   background:rgba(14,59,49,.92);color:var(--gold2);display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.3)}
 .sound.on{display:flex}.sound svg{width:22px;height:22px}
 .sound .off{display:none}.sound.muted .off{display:block}.sound.muted .onI{display:none}
-@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.leaf{transition-duration:.6s}}
+
+/* ============ Touches sénégalaises ============ */
+.wax{height:30px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='30' viewBox='0 0 96 30'%3E%3Crect width='96' height='30' fill='%230E3B31'/%3E%3Ccircle cx='15' cy='15' r='10' fill='%23F2B705'/%3E%3Ccircle cx='15' cy='15' r='6' fill='%23C8102E'/%3E%3Ccircle cx='15' cy='15' r='2.5' fill='%23F8F3E9'/%3E%3Cpolygon points='30,26 38,4 46,26' fill='%2300A35C'/%3E%3Cpolygon points='38,4 46,26 54,4' fill='%23E86A1C'/%3E%3Cpolygon points='70,3 82,15 70,27 58,15' fill='%232B4FA8'/%3E%3Cpolygon points='70,9 76,15 70,21 64,15' fill='%23F2B705'/%3E%3Ccircle cx='90' cy='6' r='2' fill='%23E7CF8E'/%3E%3Ccircle cx='90' cy='24' r='2' fill='%23E7CF8E'/%3E%3C/svg%3E") repeat-x;background-size:96px 30px;border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);
+  animation:waxmove 14s linear infinite}
+.wax.rev{animation-direction:reverse}
+@keyframes waxmove{to{background-position:96px 0}}
+.dalal{font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold2);margin-top:8px;opacity:.85}
+#confetti{position:fixed;inset:0;z-index:55;pointer-events:none}
+.scene{display:block;width:calc(100% + 56px);height:auto;margin:-60px -28px 26px}
+.scene .boat{animation:bob 4.5s ease-in-out infinite;transform-origin:200px 120px;transform-box:view-box}
+.scene .w1{animation:wave 9s linear infinite}.scene .w2{animation:wave 6s linear infinite reverse}
+.scene .sun{animation:glow 5s ease-in-out infinite;transform-origin:120px 70px;transform-box:view-box}
+.scene .bird{animation:fly 18s linear infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-1.8deg)}50%{transform:translateY(-3px) rotate(1.8deg)}}
+@keyframes wave{to{transform:translateX(-200px)}}
+@keyframes glow{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+@keyframes fly{from{transform:translateX(-60px)}to{transform:translateX(460px)}}
+.amp{animation:beat 2.6s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.18)}24%{transform:scale(1)}36%{transform:scale(1.1)}48%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.wax,.scene *,.amp{animation:none!important}.reveal{opacity:1;transform:none}.leaf{transition-duration:.6s}}
 </style>
 </head>
 <body class="locked">
@@ -200,6 +219,7 @@ body.admin main, body.admin #gate{display:none}
   <canvas id="dust"></canvas>
   <div class="gate-top">
     <div class="arabic">بِسْمِ اللَّهِ</div>
+    <div class="dalal">Dalal ak jàmm</div>
     <div class="for" id="gateFor" hidden>Invitation pour</div>
     <div class="guest" id="gateGuest"></div>
   </div>
@@ -228,6 +248,7 @@ body.admin main, body.admin #gate{display:none}
     </div>
   </section>
 
+  <div class="wax"></div>
   <section class="verse reveal">
     <div class="divider"><svg viewBox="0 0 20 20"><g fill="none" stroke="currentColor"><rect x="5" y="5" width="10" height="10"/><rect x="5" y="5" width="10" height="10" transform="rotate(45 10 10)"/></g></svg></div>
     <p class="arabic">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
@@ -267,6 +288,7 @@ body.admin main, body.admin #gate{display:none}
     <div id="infos"></div>
   </section>
 
+  <div class="wax rev"></div>
   <section class="rsvp reveal" id="rsvp">
     <div class="eyebrow" id="rsvpEyebrow">Merci de répondre</div>
     <h2>Votre réponse</h2>
@@ -295,11 +317,38 @@ body.admin main, body.admin #gate{display:none}
         <a class="btn" id="sendMail" target="_blank" rel="noopener" hidden>Répondre par e-mail</a>
       </div>
       <p class="note" id="sendNote"></p>
-      <div class="thanks" id="thanks">Jazākum Allāhu khayran 🤍<br><small>Votre message s'est ouvert dans votre application : pensez à appuyer sur « Envoyer ».</small></div>
+      <div class="thanks" id="thanks">Jërëjëf · Jazākum Allāhu khayran 🤍<br><small>Votre message s'est ouvert dans votre application : pensez à appuyer sur « Envoyer ».</small></div>
     </form>
   </section>
 
+  <div class="wax"></div>
   <footer class="reveal">
+    <svg class="scene" viewBox="0 0 400 170" aria-hidden="true">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E3B31"/><stop offset=".55" stop-color="#7a4a22"/><stop offset="1" stop-color="#E8A04A"/></linearGradient>
+        <radialGradient id="sunG"><stop offset="0" stop-color="#FFE7A8"/><stop offset=".6" stop-color="#F2B705"/><stop offset="1" stop-color="#F2B705" stop-opacity="0"/></radialGradient>
+        <clipPath id="hull"><path d="M0 12 Q14 30 60 31 Q106 30 120 6 L114 11 Q60 19 6 13 Z"/></clipPath>
+      </defs>
+      <rect width="400" height="125" fill="url(#sky)"/>
+      <circle class="sun" cx="120" cy="92" r="46" fill="url(#sunG)"/>
+      <circle cx="120" cy="96" r="20" fill="#FFD66B"/>
+      <g class="bird" fill="none" stroke="#1b2a24" stroke-width="1.4"><path d="M20 40 q5 -5 10 0 q5 -5 10 0"/><path d="M44 52 q4 -4 8 0 q4 -4 8 0"/></g>
+      <!-- baobab -->
+      <g fill="#0a1f19">
+        <path d="M318 126 C323 106 321 90 317 74 C307 70 297 62 292 52 L298 49 C304 57 310 61 316 63 C314 54 311 46 305 38 L311 35 C317 43 320 51 322 59 C324 49 330 41 338 35 L342 39 C336 47 332 55 332 63 C340 59 348 53 354 45 L358 49 C352 59 344 67 334 73 C330 91 330 110 337 126 Z"/>
+        <ellipse cx="290" cy="48" rx="13" ry="7"/><ellipse cx="305" cy="33" rx="12" ry="7"/><ellipse cx="340" cy="31" rx="14" ry="7"/><ellipse cx="359" cy="44" rx="12" ry="6"/><ellipse cx="322" cy="44" rx="10" ry="6"/>
+      </g>
+      <!-- mer -->
+      <rect y="118" width="400" height="52" fill="#0b3a4a"/>
+      <g class="w1" fill="#13586b"><path d="M0 124 q25 -6 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 V170 H0 Z"/></g>
+      <!-- pirogue -->
+      <g class="boat"><g transform="translate(150 108)">
+        <line x1="66" y1="12" x2="66" y2="-18" stroke="#3b2a1a" stroke-width="1.6"/><path d="M66 -18 l14 4 l-14 4 z" fill="#C8102E"/>
+        <g clip-path="url(#hull)"><rect x="0" y="0" width="120" height="34" fill="#F2B705"/><rect x="0" y="14" width="120" height="4" fill="#C8102E"/><rect x="0" y="18" width="120" height="4" fill="#00A35C"/><rect x="0" y="22" width="120" height="12" fill="#2B4FA8"/>
+          <g fill="#F8F3E9"><polygon points="20,24 24,30 28,24"/><polygon points="44,25 48,31 52,25"/><polygon points="68,25 72,31 76,25"/><polygon points="92,24 96,30 100,24"/></g></g>
+      </g></g>
+      <g class="w2" fill="#0E3B31" opacity=".9"><path d="M0 140 q25 -5 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 V170 H0 Z"/></g>
+    </svg>
     <p class="arabic">بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ</p>
     <p class="fr">« Qu'Allah vous bénisse, répande Ses bénédictions sur vous et vous unisse dans le bien. »</p>
     <div class="sign" id="footSign"></div>
@@ -340,6 +389,7 @@ body.admin main, body.admin #gate{display:none}
 </div>
 
 <div class="toast" id="toast"></div>
+<canvas id="confetti"></canvas>
 <audio id="bg" loop preload="auto"></audio>
 <button class="sound" id="soundBtn" aria-label="Couper ou remettre le son">
   <svg class="onI" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>
@@ -371,7 +421,7 @@ const CONFIG = {
   email: "",                       // adresse pour les réponses par e-mail
   photos: [],
   audio: "",                       // fond sonore : "audio.mp3" (sur GitHub) ou data:URI — vide = pas de son                      // images en data:URI (ajoutées plus tard)
-  url: "https://claude.ai/artifact/LGcobK4t1ngnC5xmDcd2ze"  // adresse publique de cette invitation (lien claude.ai)
+  url: "https://lindorr3.github.io/mariage/"  // adresse publique de cette invitation (lien claude.ai)
 };
 /* ===================================================================== */
 
@@ -489,6 +539,19 @@ function observe(){
 }
 
 /* ---------- Ouverture des portes + poussière d'or ---------- */
+function confetti(){
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c=$("#confetti"), x=c.getContext("2d"), dpr=devicePixelRatio||1; c.width=innerWidth*dpr; c.height=innerHeight*dpr;
+  const C=["#F2B705","#C8102E","#00A35C","#2B4FA8","#E86A1C","#E7CF8E","#F8F3E9"];
+  const P=Array.from({length:150},()=>({x:innerWidth/2+(Math.random()-.5)*80,y:innerHeight*.45,vx:(Math.random()-.5)*11,vy:-Math.random()*13-4,
+    r:Math.random()*6+4,a:Math.random()*6,va:(Math.random()-.5)*.3,c:C[Math.random()*C.length|0],s:Math.random()*3|0}));
+  const t0=performance.now();
+  (function f(t){ const k=(t-t0)/1000; x.setTransform(dpr,0,0,dpr,0,0); x.clearRect(0,0,innerWidth,innerHeight);
+    P.forEach(p=>{ p.vy+=.28; p.vx*=.99; p.x+=p.vx; p.y+=p.vy; p.a+=p.va; x.save(); x.translate(p.x,p.y); x.rotate(p.a); x.globalAlpha=Math.max(0,1-k/5); x.fillStyle=p.c;
+      if(p.s===0) x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2); else if(p.s===1){x.beginPath();x.arc(0,0,p.r/2.4,0,7);x.fill();} else {x.beginPath();x.moveTo(0,-p.r/2);x.lineTo(p.r/2,p.r/2);x.lineTo(-p.r/2,p.r/2);x.fill();}
+      x.restore(); });
+    if(k<5) requestAnimationFrame(f); else c.remove(); })(t0);
+}
 function startSound(){
   if (!CONFIG.audio) return;
   const a=$("#bg"); if (!a.src) a.src=CONFIG.audio; a.volume=0;
@@ -502,6 +565,7 @@ let opened=false;
 function openGate(){
   if (opened) return; opened=true; startSound();
   $("#gate").classList.add("open"); document.body.classList.remove("locked");
+  setTimeout(confetti, 1500);
   setTimeout(()=>{ document.querySelector(".hero .reveal").classList.add("in"); }, 1900);
 }
 $("#openBtn").addEventListener("click", openGate);
