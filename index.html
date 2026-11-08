@@ -5,22 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="theme-color" content="#EFE7DB">
-<meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light">
+<meta name="color-scheme" content="light dark">
 <title>Lindor & Zeynab — Invitation au mariage</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  color-scheme:light only;
+  color-scheme:light dark;
   --cream:#F3EDE3; --cream2:#E9E0D2; --paper:#FBF8F3; --sand:#D9CBB6;
   --choco:#3A2820; --choco2:#4C3428; --brown:#6E4E3C; --terra:#A65D3F; --terra2:#8E4B31;
   --gold:#B8955A; --gold2:#D9BF8C; --ink:#2E221C; --muted:#7A6A5E;
   --vh:1vh;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{color-scheme:light only;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{font-family:"Cormorant Garamond",Georgia,serif;color:var(--ink);background:var(--cream2);font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
 body.locked{overflow:hidden;height:100%}
 .script{font-family:"Great Vibes",cursive;font-weight:400}
@@ -233,6 +232,32 @@ body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin #
 #cover .hint{margin-top:34px}
 .hint{font-family:"Montserrat",Arial,sans-serif;font-size:10px;letter-spacing:.22em;color:#6E5A4C}
 .hero .eyebrow,.hero .meta{font-family:"Montserrat",Arial,sans-serif;font-size:11px}
+
+/* ========== Version sombre dessinée (téléphones en mode sombre, dont Samsung) ========== */
+@media (prefers-color-scheme: dark){
+  :root{--cream:#1F1713;--cream2:#16100D;--paper:#271D18;--sand:#4A3A30;--choco:#F1E6D6;--choco2:#E8DAC6;--brown:#D9C3A5;--ink:#F3EBDD;--muted:#B9A897;--terra:#D08A63;--gold2:#E6CB94}
+  body{background:#120D0A}
+  .page{box-shadow:0 0 60px rgba(0,0,0,.6)}
+  #intro{background:radial-gradient(ellipse at 50% 45%,#3A2C22 0%,#241A14 60%,#160F0C 100%)}
+  #intro .k{color:#D9A27C} #intro .mm{color:#F3EBDD} #intro .sub{color:#E3D5C2} #intro .sub i{color:#9C8B7A}
+  #cover{background:#1F1713}
+  #cover .bism{color:#E6CB94} #cover .date{color:#F3EBDD} #cover .hint{color:#C8B49C}
+  .pill{background:#F1E6D6;color:#1F1713} .pill.t{background:#B4693F;color:#fff}
+  .env .body,.env .flap{background:#3A281F;box-shadow:0 0 0 1px rgba(205,170,106,.35),0 18px 40px rgba(0,0,0,.55)}
+  .env .card{background:#F6EFE4;color:#A65D3F}
+  .btn.dark{background:#F1E6D6;color:#1F1713}
+  .btn.line{color:#F1E6D6;border-color:#F1E6D6}
+  .cd div{background:#F1E6D6;color:#1F1713} .cd small{color:#8A6A3E}
+  .choice input:checked+label{background:#F1E6D6;color:#1F1713;border-color:#F1E6D6}
+  .final{background:#0E0907}
+  .final p{color:#E3D5C2}
+  .nav{background:rgba(39,29,24,.9)} .nav a{color:#D9C3A5} .nav a.on{background:#F1E6D6;color:#1F1713}
+  .sound{background:rgba(39,29,24,.9);color:#F1E6D6}
+  .map iframe{-webkit-filter:invert(.9) hue-rotate(180deg) sepia(.2);filter:invert(.9) hue-rotate(180deg) sepia(.2)}
+  .petal{background:linear-gradient(135deg,#D08A63,#8E4B31)}
+  .story p,.merci p{color:#E3D5C2!important}
+  input[type=text],input[type=number],select,textarea{color:#F3EBDD}
+}
 @media (prefers-reduced-motion:reduce){#intro *{animation:none!important;opacity:1!important;transform:none!important}.reveal{opacity:1;transform:none}.petal,.seal::after{display:none}.slides video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;-webkit-filter:brightness(.72) saturate(.75) sepia(.25);filter:brightness(.72) saturate(.75) sepia(.25)}
 .slides .s.on{animation:none}}
 </style>
