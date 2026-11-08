@@ -8,7 +8,7 @@
 <title>Lindor & Zeynab — Invitation au mariage</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --cream:#F3EDE3; --cream2:#E9E0D2; --paper:#FBF8F3; --sand:#D9CBB6;
@@ -182,7 +182,7 @@ textarea{min-height:90px;resize:vertical}
 
 /* organisateurs */
 #admin{display:none;max-width:760px;margin:0 auto;background:var(--cream);min-height:100vh;padding:40px 22px 80px}
-body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin .nav{display:none!important}
+body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin #intro,body.admin .nav{display:none!important}
 #admin h1{font-family:"Great Vibes",cursive;font-weight:400;font-size:48px;color:var(--terra)}
 #admin .card{background:var(--paper);border:1px solid var(--sand);border-radius:12px;padding:20px;margin-top:18px}
 #admin h3{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
@@ -195,17 +195,62 @@ body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin .
 .warn{font-size:15px;color:#7a4a12;background:#f6e8cc;border-radius:8px;padding:10px 12px;margin-top:12px}
 .toast{position:fixed;left:50%;bottom:90px;-webkit-transform:translateX(-50%);transform:translateX(-50%);background:var(--choco);color:var(--cream);padding:11px 18px;border-radius:30px;z-index:99;font-size:15px;opacity:0;transition:opacity .3s;pointer-events:none}
 .toast.show{opacity:1}
-@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.petal,.seal::after{display:none}.slides video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;-webkit-filter:brightness(.72) saturate(.75) sepia(.25);filter:brightness(.72) saturate(.75) sepia(.25)}
+
+/* ========== Écran-titre (avant l'enveloppe) ========== */
+.sans{font-family:"Montserrat",Arial,sans-serif}
+#intro{position:fixed;top:0;left:0;right:0;bottom:0;z-index:70;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;
+  background:radial-gradient(ellipse at 50% 45%,#DAD2C7 0%,#CBC1B5 55%,#B9AEA1 100%);transition:opacity 1.1s ease,visibility 0s linear 1.1s;cursor:pointer}
+#intro.out{opacity:0;visibility:hidden}
+#intro .k{font-family:"Montserrat",Arial,sans-serif;font-weight:500;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#8A5A3E;opacity:0;animation:up 1s ease .3s forwards}
+#intro .line{width:min(62vw,250px);height:1px;background:linear-gradient(90deg,transparent,#A98B62,transparent);margin:14px auto 4px;transform:scaleX(0);animation:grow 1.1s ease .7s forwards}
+#intro .mm{font-family:"Great Vibes",cursive;font-size:clamp(50px,15vw,70px);line-height:1.15;color:#2A1F18;opacity:0;animation:up 1.2s ease 1s forwards;white-space:nowrap}
+#intro .sub{font-family:"Montserrat",Arial,sans-serif;font-size:13px;color:#3B2E25;margin-top:6px;opacity:0;animation:up 1s ease 1.5s forwards}
+#intro .sub i{font-style:normal;margin:0 .6em;color:#8A7A6A}
+#specks{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes grow{to{transform:scaleX(1)}}
+/* couverture façon référence */
+#cover{background:#EFE9E1}
+.pill{font-family:"Montserrat",Arial,sans-serif;font-weight:500;font-size:10px;letter-spacing:.18em;padding:9px 18px;min-width:118px}
+.pill.t{background:#9A5A36}
+#cover .eyebrow{font-family:"Montserrat",Arial,sans-serif;color:#A98B62;letter-spacing:.3em;font-size:11px}
+#cover .star{color:#A98B62;font-size:12px;margin:8px 0 2px}
+#cover .names .amp{color:#B8955A}
+#cover .date{font-family:"Montserrat",Arial,sans-serif;font-weight:600;font-size:12px;letter-spacing:.14em;color:#2E221C}
+#cover .for{font-size:16px}
+.env .body{background:#2B1E18;border-radius:3px}
+.env .body::before,.env .body::after{display:none}
+.env .flap{background:#2B1E18}
+.seal{font-size:22px;width:70px;height:70px;margin:-35px 0 0 -35px;top:50%;color:#fff;text-shadow:0 1px 2px rgba(90,60,20,.6);
+  background:radial-gradient(circle at 35% 30%,#E8CF98,#C29E5C 50%,#9C7738 100%)}
+.flower{width:50%}
+.flower.a{left:-14%;top:-30%}.flower.b{right:-14%;bottom:-26%}
+.env .card{opacity:0;transition:transform 1.1s cubic-bezier(.6,0,.2,1) .5s,opacity .4s ease .45s}
+#cover.open .env .card{opacity:1}
+#cover .hint{margin-top:34px}
+.hint{font-family:"Montserrat",Arial,sans-serif;font-size:10px;letter-spacing:.22em;color:#6E5A4C}
+.hero .eyebrow,.hero .meta{font-family:"Montserrat",Arial,sans-serif;font-size:11px}
+@media (prefers-reduced-motion:reduce){#intro *{animation:none!important;opacity:1!important;transform:none!important}.reveal{opacity:1;transform:none}.petal,.seal::after{display:none}.slides video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;-webkit-filter:brightness(.72) saturate(.75) sepia(.25);filter:brightness(.72) saturate(.75) sepia(.25)}
 .slides .s.on{animation:none}}
 </style>
 </head>
 <body class="locked">
 
+<!-- ====================== ÉCRAN-TITRE ====================== -->
+<div id="intro" aria-label="Invitation digitale personnalisée">
+  <canvas id="specks"></canvas>
+  <div class="k">Invitation digitale personnalisée</div>
+  <div class="line"></div>
+  <div class="mm" id="iMM"></div>
+  <div class="sub" id="iSub"></div>
+</div>
+
 <!-- ====================== COUVERTURE ====================== -->
 <div id="cover">
   <div class="bism arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-  <div class="pills"><span class="pill">Invitation</span><span class="pill t" id="pillDate">Mariage</span></div>
-  <div class="eyebrow">Invitation au mariage de</div>
+  <div class="pills"><span class="pill" id="p1"></span><span class="pill t" id="p2"></span></div>
+  <div class="eyebrow">Invitation</div>
+  <div class="star">✦</div>
   <div class="names"><span id="cG"></span><span class="amp">&amp;</span><span id="cB"></span></div>
   <div class="date" id="cDate"></div>
   <div class="for" id="cFor"></div>
@@ -213,13 +258,15 @@ body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin .
     <div class="body"></div>
     <div class="card" id="envCard"></div>
     <div class="flap"></div>
-    <svg class="flower a" viewBox="0 0 160 120" aria-hidden="true"><g id="bq">
-      <path d="M20 110 C50 80 70 60 120 20" stroke="#9C8566" stroke-width="2" fill="none"/><path d="M40 100 C70 85 90 70 140 60" stroke="#9C8566" stroke-width="1.6" fill="none"/>
-      <g fill="#C8B79A"><ellipse cx="62" cy="70" rx="12" ry="4" transform="rotate(-40 62 70)"/><ellipse cx="100" cy="42" rx="12" ry="4" transform="rotate(-50 100 42)"/><ellipse cx="96" cy="70" rx="12" ry="4" transform="rotate(-15 96 70)"/></g>
-      <g><circle cx="84" cy="52" r="20" fill="#F7F1E6" stroke="#E2D5BF"/><circle cx="84" cy="52" r="12" fill="#FBF7EF" stroke="#E8DCC7"/><circle cx="84" cy="52" r="5" fill="#E2CFAE"/></g>
-      <g><circle cx="122" cy="26" r="14" fill="#F3EADB" stroke="#E2D5BF"/><circle cx="122" cy="26" r="6" fill="#DCC6A1"/></g>
-      <g><circle cx="128" cy="62" r="10" fill="#EFE3CF" stroke="#E2D5BF"/><circle cx="128" cy="62" r="4" fill="#D5BC93"/></g>
-      <g fill="#E8DCC7"><circle cx="50" cy="88" r="5"/><circle cx="58" cy="94" r="4"/><circle cx="44" cy="96" r="3.5"/></g></g></svg>
+    <svg class="flower a" viewBox="0 0 200 150" aria-hidden="true"><g id="bq">
+      <g stroke="#B7A78D" stroke-width="1" fill="none"><path d="M30 140 Q80 90 170 30"/><path d="M50 130 Q110 100 190 85"/><path d="M40 120 Q60 60 70 15"/></g>
+      <g fill="#EDE4D6"><circle cx="150" cy="40" r="3"/><circle cx="160" cy="34" r="2.5"/><circle cx="168" cy="44" r="2.2"/><circle cx="176" cy="30" r="2"/><circle cx="182" cy="82" r="2.6"/><circle cx="174" cy="90" r="2.2"/><circle cx="188" cy="92" r="2"/><circle cx="66" cy="22" r="2.6"/><circle cx="74" cy="14" r="2.2"/><circle cx="58" cy="16" r="2"/><circle cx="120" cy="58" r="2.4"/><circle cx="132" cy="50" r="2"/></g>
+      <g fill="#CDBFA5"><ellipse cx="78" cy="96" rx="16" ry="5" transform="rotate(-35 78 96)"/><ellipse cx="128" cy="96" rx="15" ry="5" transform="rotate(10 128 96)"/><ellipse cx="60" cy="70" rx="14" ry="4.5" transform="rotate(-70 60 70)"/></g>
+      <g transform="translate(100 70)"><circle r="28" fill="#F4EDE2"/><path d="M-20 -6 Q-8 -26 14 -18 Q26 -6 18 12 Q4 26 -14 18 Q-26 8 -20 -6z" fill="#FBF7F0" stroke="#E2D6C3"/><path d="M-10 -4 Q0 -16 10 -6 Q14 6 2 10 Q-10 10 -10 -4z" fill="#F1E7D8" stroke="#DDCDB5"/><path d="M-3 -2 q4 -5 7 1 q-2 4 -6 2" fill="none" stroke="#CBB596"/></g>
+      <g transform="translate(58 104) scale(.75)"><circle r="26" fill="#EFE3D1"/><path d="M-18 -4 Q-6 -24 14 -16 Q24 -4 16 12 Q2 24 -14 16 Q-24 6 -18 -4z" fill="#F6EEE2" stroke="#DDCDB5"/><path d="M-8 -2 Q0 -12 8 -4 Q10 6 0 8 Q-8 8 -8 -2z" fill="#E9DAC4" stroke="#D3BF9F"/></g>
+      <g transform="translate(140 104) scale(.6)"><circle r="26" fill="#E7D3BC"/><path d="M-16 -4 Q-4 -22 14 -14 Q22 -2 14 12 Q0 22 -14 14 Q-22 6 -16 -4z" fill="#F0E2CF" stroke="#D5C0A2"/><circle r="6" fill="#D2B48E"/></g>
+      <g transform="translate(86 38) scale(.45)"><circle r="26" fill="#F2E9DC"/><circle r="12" fill="#E5D6C0"/></g>
+    </g></svg>
     <svg class="flower b" viewBox="0 0 160 120" aria-hidden="true"><use href="#bq"/></svg>
     <button class="seal" id="seal" aria-label="Ouvrir l'invitation">L·Z</button>
   </div>
@@ -372,8 +419,10 @@ body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin .
    CONFIGURATION — "" ou null = masqué / « à confirmer »
    ===================================================================== */
 const CONFIG = {
+  famille: "Fall",                 // « M. & Mme Fall » sur l'écran-titre et le sceau
   marie: "Lindor",
   mariee: "Zeynab",
+  pastilles: ["Nikah", "Yoff"],    // les deux pastilles en haut de la couverture
   date: "2026-11-28",              // ajouter l'heure dès qu'elle est connue : "2026-11-28T16:00"
   histoire: [
     "Il y a des rencontres qui ne doivent rien au hasard. Deux chemins se sont croisés, puis se sont choisis, et pas à pas, une évidence est née.",
@@ -431,11 +480,16 @@ function render(){
   var mask = INV ? (INV.mask||allMask()) : allMask();
   var evs = CONFIG.events.filter(function(e){ return mask & (1<<(e.id-1)); });
   var dateTxt = CONFIG.date ? fmtDate(CONFIG.date,false) : "Date bientôt dévoilée";
+  startIntro();
 
   ["#cG","#hG"].forEach(function(s){ $(s).textContent=CONFIG.marie; });
   ["#cB","#hB"].forEach(function(s){ $(s).textContent=CONFIG.mariee; });
-  $("#envCard").textContent = CONFIG.marie[0]+" & "+CONFIG.mariee[0];
-  $("#seal").textContent = CONFIG.marie[0]+"·"+CONFIG.mariee[0];
+  $("#envCard").textContent = CONFIG.marie+" & "+CONFIG.mariee;
+  $("#seal").textContent = CONFIG.famille || (CONFIG.marie[0]+"·"+CONFIG.mariee[0]);
+  $("#iMM").textContent = CONFIG.famille ? "M. & Mme "+CONFIG.famille : CONFIG.marie+" & "+CONFIG.mariee;
+  var dShort = parseD(CONFIG.date); dShort = dShort ? dShort.toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"}) : "";
+  $("#iSub").innerHTML = esc(CONFIG.marie+" & "+CONFIG.mariee)+(dShort?"<i>·</i>"+esc(dShort):"");
+  $("#p1").textContent = (CONFIG.pastilles||[])[0]||"Invitation"; $("#p2").textContent = (CONFIG.pastilles||[])[1]||"Mariage";
   $("#cDate").textContent = dateTxt;
   $("#hMeta").textContent = (evs[0]?evs[0].titre:"Mariage")+" · "+dateTxt;
   $("#storySign").textContent = $("#merciSign").textContent = CONFIG.mariee+" & "+CONFIG.marie;
@@ -567,6 +621,20 @@ $("#soundBtn").addEventListener("click",function(){ var a=$("#bg"), b=$("#soundB
   if (a.paused){ if(a.ended) a.currentTime=0; var p=a.play(); if(p&&p.then) p.then(function(){b.classList.remove("muted");}).catch(function(){}); else b.classList.remove("muted"); }
   else { a.pause(); b.classList.add("muted"); } });
 document.addEventListener("visibilitychange",function(){ var a=$("#bg"); if(document.hidden && !a.paused){ a.pause(); a.dataset.r="1"; } else if(!document.hidden && a.dataset.r){ delete a.dataset.r; a.play().catch(function(){}); } });
+
+/* ---------- écran-titre ---------- */
+function startIntro(){
+  var it=$("#intro"); if(!it) return;
+  var c=$("#specks"), x=c.getContext("2d"), dpr=window.devicePixelRatio||1, P=[], alive=true;
+  function rs(){ c.width=innerWidth*dpr; c.height=innerHeight*dpr; } rs(); window.addEventListener("resize",rs);
+  for(var i=0;i<46;i++) P.push({x:Math.random(),y:Math.random(),r:Math.random()*1.6+.5,vx:(Math.random()-.5)*.0004,vy:-(Math.random()*.0005+.0001),a:Math.random()*.5+.2});
+  (function f(){ if(!alive) return; x.clearRect(0,0,c.width,c.height);
+    P.forEach(function(p){ p.x+=p.vx; p.y+=p.vy; if(p.y<0){p.y=1;p.x=Math.random();}
+      x.beginPath(); x.arc(p.x*c.width,p.y*c.height,p.r*dpr,0,7); x.fillStyle="rgba(95,75,55,"+p.a+")"; x.fill(); });
+    requestAnimationFrame(f); })();
+  function out(){ if(it.classList.contains("out")) return; it.classList.add("out"); setTimeout(function(){ alive=false; it.style.display="none"; },1200); }
+  setTimeout(out, 3600); it.addEventListener("click", out);
+}
 
 /* ---------- ouverture ---------- */
 var opened=false;
