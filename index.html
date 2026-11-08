@@ -195,7 +195,7 @@ body.admin main, body.admin #gate{display:none}
 .sound .off{display:none}.sound.muted .off{display:block}.sound.muted .onI{display:none}
 
 /* ============ Touches sénégalaises ============ */
-.wax{height:30px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='30' viewBox='0 0 96 30'%3E%3Crect width='96' height='30' fill='%230E3B31'/%3E%3Ccircle cx='15' cy='15' r='10' fill='%23F2B705'/%3E%3Ccircle cx='15' cy='15' r='6' fill='%23C8102E'/%3E%3Ccircle cx='15' cy='15' r='2.5' fill='%23F8F3E9'/%3E%3Cpolygon points='30,26 38,4 46,26' fill='%2300A35C'/%3E%3Cpolygon points='38,4 46,26 54,4' fill='%23E86A1C'/%3E%3Cpolygon points='70,3 82,15 70,27 58,15' fill='%232B4FA8'/%3E%3Cpolygon points='70,9 76,15 70,21 64,15' fill='%23F2B705'/%3E%3Ccircle cx='90' cy='6' r='2' fill='%23E7CF8E'/%3E%3Ccircle cx='90' cy='24' r='2' fill='%23E7CF8E'/%3E%3C/svg%3E") repeat-x;background-size:96px 30px;border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);
+.wax{height:30px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='30' viewBox='0 0 96 30'%3E%3Crect width='96' height='30' fill='%23F8F3E9'/%3E%3Ccircle cx='15' cy='15' r='10' fill='%23F2B705'/%3E%3Ccircle cx='15' cy='15' r='6' fill='%23C8102E'/%3E%3Ccircle cx='15' cy='15' r='2.5' fill='%23F8F3E9'/%3E%3Cpolygon points='30,26 38,4 46,26' fill='%2300A35C'/%3E%3Cpolygon points='38,4 46,26 54,4' fill='%23E86A1C'/%3E%3Cpolygon points='70,3 82,15 70,27 58,15' fill='%232B4FA8'/%3E%3Cpolygon points='70,9 76,15 70,21 64,15' fill='%23F2B705'/%3E%3Ccircle cx='90' cy='6' r='2' fill='%23E7CF8E'/%3E%3Ccircle cx='90' cy='24' r='2' fill='%23E7CF8E'/%3E%3C/svg%3E") repeat-x;background-size:96px 30px;border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);
   animation:waxmove 14s linear infinite}
 .wax.rev{animation-direction:reverse}
 @keyframes waxmove{to{background-position:96px 0}}
@@ -213,6 +213,50 @@ body.admin main, body.admin #gate{display:none}
 .amp{animation:beat 2.6s ease-in-out infinite}
 @keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.18)}24%{transform:scale(1)}36%{transform:scale(1.1)}48%{transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){.wax,.scene *,.amp{animation:none!important}.reveal{opacity:1;transform:none}.leaf{transition-duration:.6s}}
+
+/* ============ Thème « ciel & marbre » (inspiré de la vidéo) ============ */
+:root{--emerald:#2E3156;--emerald2:#3C4070;--sky:#EEEFF8;--lav:#D9DCF0;--navy:#2E3156}
+body{background:#E9EAF5 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.008 .02' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .55  0 0 0 0 .56  0 0 0 0 .72  0 0 0 -2.2 1.25'/%3E%3C/filter%3E%3Crect width='400' height='400' fill='%23EEEFF8'/%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");background-size:400px}
+#gate{background:#EEEFF8 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.008 .02' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .55  0 0 0 0 .56  0 0 0 0 .72  0 0 0 -2.2 1.25'/%3E%3C/filter%3E%3Crect width='400' height='400' fill='%23EEEFF8'/%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");background-size:400px}
+#gate::before{opacity:.18}
+.gate-top .arabic{color:var(--gold3)} .dalal,.gate-top .for{color:var(--gold3);opacity:1}
+.gate-top .guest{color:var(--navy)}
+.gate-top{margin-bottom:62px}
+@media (max-height:700px){.doorway{width:min(66vw,300px)}.gate-top{margin-bottom:50px}}
+.tap{color:#7d6128;background:rgba(255,255,255,.55);border-color:var(--gold)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(198,160,82,.35)}50%{box-shadow:0 0 0 12px rgba(198,160,82,0)}}
+.doorway .frame{inset:-18px;border:12px solid #FBFAF6;box-shadow:0 0 0 2px var(--gold),inset 0 0 0 2px rgba(198,160,82,.6),0 18px 50px rgba(70,70,120,.25)}
+.light{background:linear-gradient(180deg,#b7c8ea 0%,#e2e8f6 48%,#f7efe6 60%,#a9c4e0 60.5%,#c9dbec 78%,#fbfaf6 78.5%)}
+.light .arabic{color:var(--navy);position:absolute;top:30%}
+.flowers{position:absolute;z-index:3;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 90'%3E%3Cg fill='%239fb59a'%3E%3Cellipse cx='20' cy='70' rx='18' ry='7' transform='rotate(-25 20 70)'/%3E%3Cellipse cx='140' cy='70' rx='18' ry='7' transform='rotate(25 140 70)'/%3E%3Cellipse cx='80' cy='82' rx='22' ry='7'/%3E%3Cellipse cx='52' cy='40' rx='14' ry='5' transform='rotate(-50 52 40)'/%3E%3Cellipse cx='110' cy='38' rx='14' ry='5' transform='rotate(50 110 38)'/%3E%3C/g%3E%3Cg transform='translate(40 58) scale(1.1)'%3E%3Ccircle r='16' fill='%23fffdf8' stroke='%23e6dccb'/%3E%3Ccircle cx='-5' cy='-3' r='10' fill='%23fff' stroke='%23ece3d3'/%3E%3Ccircle cx='5' cy='2' r='9' fill='%23fffaf2' stroke='%23ece3d3'/%3E%3Cpath d='M-6 0 q6 -9 11 0 q-4 7 -9 2' fill='none' stroke='%23dfd3be' stroke-width='1.2'/%3E%3C/g%3E%3Cg transform='translate(80 62) scale(1.35)'%3E%3Ccircle r='16' fill='%23fffdf8' stroke='%23e6dccb'/%3E%3Ccircle cx='-5' cy='-3' r='10' fill='%23fff' stroke='%23ece3d3'/%3E%3Ccircle cx='5' cy='2' r='9' fill='%23fffaf2' stroke='%23ece3d3'/%3E%3Cpath d='M-6 0 q6 -9 11 0 q-4 7 -9 2' fill='none' stroke='%23dfd3be' stroke-width='1.2'/%3E%3C/g%3E%3Cg transform='translate(120 58) scale(1.1)'%3E%3Ccircle r='16' fill='%23fffdf8' stroke='%23e6dccb'/%3E%3Ccircle cx='-5' cy='-3' r='10' fill='%23fff' stroke='%23ece3d3'/%3E%3Ccircle cx='5' cy='2' r='9' fill='%23fffaf2' stroke='%23ece3d3'/%3E%3Cpath d='M-6 0 q6 -9 11 0 q-4 7 -9 2' fill='none' stroke='%23dfd3be' stroke-width='1.2'/%3E%3C/g%3E%3Cg transform='translate(62 36) scale(0.8)'%3E%3Ccircle r='16' fill='%23fffdf8' stroke='%23e6dccb'/%3E%3Ccircle cx='-5' cy='-3' r='10' fill='%23fff' stroke='%23ece3d3'/%3E%3Ccircle cx='5' cy='2' r='9' fill='%23fffaf2' stroke='%23ece3d3'/%3E%3Cpath d='M-6 0 q6 -9 11 0 q-4 7 -9 2' fill='none' stroke='%23dfd3be' stroke-width='1.2'/%3E%3C/g%3E%3Cg transform='translate(100 36) scale(0.8)'%3E%3Ccircle r='16' fill='%23fffdf8' stroke='%23e6dccb'/%3E%3Ccircle cx='-5' cy='-3' r='10' fill='%23fff' stroke='%23ece3d3'/%3E%3Ccircle cx='5' cy='2' r='9' fill='%23fffaf2' stroke='%23ece3d3'/%3E%3Cpath d='M-6 0 q6 -9 11 0 q-4 7 -9 2' fill='none' stroke='%23dfd3be' stroke-width='1.2'/%3E%3C/g%3E%3Cg transform='translate(18 48) scale(0.7)'%3E%3Ccircle r='16' fill='%23fffdf8' stroke='%23e6dccb'/%3E%3Ccircle cx='-5' cy='-3' r='10' fill='%23fff' stroke='%23ece3d3'/%3E%3Ccircle cx='5' cy='2' r='9' fill='%23fffaf2' stroke='%23ece3d3'/%3E%3Cpath d='M-6 0 q6 -9 11 0 q-4 7 -9 2' fill='none' stroke='%23dfd3be' stroke-width='1.2'/%3E%3C/g%3E%3Cg transform='translate(142 48) scale(0.7)'%3E%3Ccircle r='16' fill='%23fffdf8' stroke='%23e6dccb'/%3E%3Ccircle cx='-5' cy='-3' r='10' fill='%23fff' stroke='%23ece3d3'/%3E%3Ccircle cx='5' cy='2' r='9' fill='%23fffaf2' stroke='%23ece3d3'/%3E%3Cpath d='M-6 0 q6 -9 11 0 q-4 7 -9 2' fill='none' stroke='%23dfd3be' stroke-width='1.2'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+.doorway .flowers.bl{left:-34px;bottom:-30px;width:58%;aspect-ratio:16/9}
+.doorway .flowers.br{right:-34px;bottom:-30px;width:58%;aspect-ratio:16/9;transform:scaleX(-1)}
+.doorway .flowers.tp{left:50%;top:-48px;width:44%;aspect-ratio:16/9;transform:translateX(-50%) rotate(180deg)}
+/* hero : balcon face à la mer */
+.hero{background:transparent;color:var(--navy)}
+.hero-inner{background:linear-gradient(180deg,#b3c4e8 0%,#d9e1f4 38%,#f6efe6 58%,#a5c0de 58.4%,#c6d8ea 80%);overflow:hidden}
+.hero-inner::before{display:none}
+.curtain{position:absolute;top:-10px;bottom:16%;width:16%;z-index:1;
+  background:repeating-linear-gradient(90deg,rgba(255,251,243,.96) 0 8px,rgba(232,222,203,.9) 8px 15px);
+  box-shadow:0 0 30px rgba(120,100,70,.18);animation:sway 8s ease-in-out infinite;transform-origin:top center}
+.curtain.l{left:0;border-radius:0 0 70% 0/0 0 18% 0}
+.curtain.r{right:0;border-radius:0 0 0 70%/0 0 0 18%;animation-delay:-4s}
+@keyframes sway{0%,100%{transform:skewX(0)}50%{transform:skewX(1.6deg)}}
+.balcony{position:absolute;left:0;right:0;bottom:0;height:19%;z-index:1;
+  background:linear-gradient(#fdfcf8,#ece7dc) top/100% 16px no-repeat,linear-gradient(#ece7dc,#e2dccf) bottom/100% 14px no-repeat,
+  repeating-linear-gradient(90deg,transparent 0 7px,#fbfaf5 7px 19px,#e9e4d8 19px 21px,transparent 21px 30px) center/100% calc(100% - 30px) no-repeat}
+.hero .flowers.bl{left:-10px;bottom:6%;width:46%;aspect-ratio:16/9}
+.hero .flowers.br{right:-10px;bottom:6%;width:46%;aspect-ratio:16/9;transform:scaleX(-1)}
+.arch{z-index:2;background:rgba(255,255,255,.58);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-color:var(--gold)}
+.bism{color:var(--gold3)} .hero .lead{color:var(--navy);opacity:.8}
+.names{color:var(--navy);text-shadow:0 2px 18px rgba(255,255,255,.9)} .names .amp{color:var(--gold3)}
+.hero .date,.hero .guestline{color:var(--navy)}
+.scroll-hint{position:relative;z-index:2;color:var(--navy)} .scroll-hint span{background:linear-gradient(var(--navy),transparent)}
+/* sections claires */
+.infos{background:var(--sky);color:var(--ink)} .infos h2{color:var(--navy)} .infos .eyebrow,.info h4{color:var(--gold3)} .info p{color:var(--ink)}
+footer{background:var(--sky);color:var(--gold3)} footer .fr{color:var(--muted)} footer .sign{color:var(--navy)}
+.wax{border-color:var(--gold)}
+.sound{background:rgba(255,255,255,.9);color:var(--gold3)}
 </style>
 </head>
 <body class="locked">
@@ -231,6 +275,7 @@ body.admin main, body.admin #gate{display:none}
     <div class="light"><div class="arabic">مَا شَاءَ اللَّه</div></div>
     <div class="leaf l"><div class="knob"></div></div>
     <div class="leaf r"><div class="knob"></div></div>
+    <div class="flowers bl"></div><div class="flowers br"></div><div class="flowers tp"></div>
   </div>
   <button class="tap" id="openBtn">Touchez pour ouvrir</button>
 </div>
@@ -239,6 +284,7 @@ body.admin main, body.admin #gate{display:none}
 <main id="top">
   <section class="hero">
     <div class="hero-inner">
+      <div class="curtain l"></div><div class="curtain r"></div><div class="balcony"></div><div class="flowers bl"></div><div class="flowers br"></div>
       <div class="arch reveal">
         <div class="bism arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
         <div class="lead">Avec la bénédiction d'Allah<br>et de nos familles</div>
@@ -328,29 +374,29 @@ body.admin main, body.admin #gate{display:none}
   <footer class="reveal">
     <svg class="scene" viewBox="0 0 400 170" aria-hidden="true">
       <defs>
-        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E3B31"/><stop offset=".55" stop-color="#7a4a22"/><stop offset="1" stop-color="#E8A04A"/></linearGradient>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C3CEEC"/><stop offset=".55" stop-color="#E8CFC6"/><stop offset="1" stop-color="#F4D9B2"/></linearGradient>
         <radialGradient id="sunG"><stop offset="0" stop-color="#FFE7A8"/><stop offset=".6" stop-color="#F2B705"/><stop offset="1" stop-color="#F2B705" stop-opacity="0"/></radialGradient>
         <clipPath id="hull"><path d="M0 12 Q14 30 60 31 Q106 30 120 6 L114 11 Q60 19 6 13 Z"/></clipPath>
       </defs>
       <rect width="400" height="125" fill="url(#sky)"/>
       <circle class="sun" cx="120" cy="92" r="46" fill="url(#sunG)"/>
       <circle cx="120" cy="96" r="20" fill="#FFD66B"/>
-      <g class="bird" fill="none" stroke="#1b2a24" stroke-width="1.4"><path d="M20 40 q5 -5 10 0 q5 -5 10 0"/><path d="M44 52 q4 -4 8 0 q4 -4 8 0"/></g>
+      <g class="bird" fill="none" stroke="#5b5a7c" stroke-width="1.4"><path d="M20 40 q5 -5 10 0 q5 -5 10 0"/><path d="M44 52 q4 -4 8 0 q4 -4 8 0"/></g>
       <!-- baobab -->
-      <g fill="#0a1f19">
+      <g fill="#5b5a7c">
         <path d="M318 126 C323 106 321 90 317 74 C307 70 297 62 292 52 L298 49 C304 57 310 61 316 63 C314 54 311 46 305 38 L311 35 C317 43 320 51 322 59 C324 49 330 41 338 35 L342 39 C336 47 332 55 332 63 C340 59 348 53 354 45 L358 49 C352 59 344 67 334 73 C330 91 330 110 337 126 Z"/>
         <ellipse cx="290" cy="48" rx="13" ry="7"/><ellipse cx="305" cy="33" rx="12" ry="7"/><ellipse cx="340" cy="31" rx="14" ry="7"/><ellipse cx="359" cy="44" rx="12" ry="6"/><ellipse cx="322" cy="44" rx="10" ry="6"/>
       </g>
       <!-- mer -->
-      <rect y="118" width="400" height="52" fill="#0b3a4a"/>
-      <g class="w1" fill="#13586b"><path d="M0 124 q25 -6 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 V170 H0 Z"/></g>
+      <rect y="118" width="400" height="52" fill="#9DB9D8"/>
+      <g class="w1" fill="#B4CBE4"><path d="M0 124 q25 -6 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 V170 H0 Z"/></g>
       <!-- pirogue -->
       <g class="boat"><g transform="translate(150 108)">
         <line x1="66" y1="12" x2="66" y2="-18" stroke="#3b2a1a" stroke-width="1.6"/><path d="M66 -18 l14 4 l-14 4 z" fill="#C8102E"/>
         <g clip-path="url(#hull)"><rect x="0" y="0" width="120" height="34" fill="#F2B705"/><rect x="0" y="14" width="120" height="4" fill="#C8102E"/><rect x="0" y="18" width="120" height="4" fill="#00A35C"/><rect x="0" y="22" width="120" height="12" fill="#2B4FA8"/>
           <g fill="#F8F3E9"><polygon points="20,24 24,30 28,24"/><polygon points="44,25 48,31 52,25"/><polygon points="68,25 72,31 76,25"/><polygon points="92,24 96,30 100,24"/></g></g>
       </g></g>
-      <g class="w2" fill="#0E3B31" opacity=".9"><path d="M0 140 q25 -5 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 V170 H0 Z"/></g>
+      <g class="w2" fill="#EEEFF8" opacity=".9"><path d="M0 140 q25 -5 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 V170 H0 Z"/></g>
     </svg>
     <p class="arabic">بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ</p>
     <p class="fr">« Qu'Allah vous bénisse, répande Ses bénédictions sur vous et vous unisse dans le bien. »</p>
@@ -586,7 +632,7 @@ $("#doorway").addEventListener("click", openGate);
   (function f(){ if($("#gate").classList.contains("open") && getComputedStyle($("#gate")).visibility==="hidden") return;
     x.clearRect(0,0,W,H);
     P.forEach(p=>{ p.y-=p.v; p.a+=.02; if(p.y<0)p.y=1; const o=.35+.35*Math.sin(p.a);
-      x.beginPath(); x.arc(p.x*W+Math.sin(p.a)*6,p.y*H,p.r*devicePixelRatio,0,7); x.fillStyle=`rgba(231,207,142,${o})`; x.fill(); });
+      x.beginPath(); x.arc(p.x*W+Math.sin(p.a)*6,p.y*H,p.r*devicePixelRatio,0,7); x.fillStyle=`rgba(190,150,70,${o})`; x.fill(); });
     requestAnimationFrame(f); })();
 })();
 
