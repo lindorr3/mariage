@@ -5,19 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="theme-color" content="#EFE7DB">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
 <title>Lindor & Zeynab — Invitation au mariage</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
+  color-scheme:light only;
   --cream:#F3EDE3; --cream2:#E9E0D2; --paper:#FBF8F3; --sand:#D9CBB6;
   --choco:#3A2820; --choco2:#4C3428; --brown:#6E4E3C; --terra:#A65D3F; --terra2:#8E4B31;
   --gold:#B8955A; --gold2:#D9BF8C; --ink:#2E221C; --muted:#7A6A5E;
   --vh:1vh;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{color-scheme:light only;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{font-family:"Cormorant Garamond",Georgia,serif;color:var(--ink);background:var(--cream2);font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
 body.locked{overflow:hidden;height:100%}
 .script{font-family:"Great Vibes",cursive;font-weight:400}
@@ -422,14 +425,14 @@ const CONFIG = {
   famille: "Fall",                 // « M. & Mme Fall » sur l'écran-titre et le sceau
   marie: "Lindor",
   mariee: "Zeynab",
-  pastilles: ["Nikah", "Yoff"],    // les deux pastilles en haut de la couverture
+  pastilles: ["Takk Diakk", "Yoff"],    // les deux pastilles en haut de la couverture
   date: "2026-11-28",              // ajouter l'heure dès qu'elle est connue : "2026-11-28T16:00"
   histoire: [
     "Il y a des rencontres qui ne doivent rien au hasard. Deux chemins se sont croisés, puis se sont choisis, et pas à pas, une évidence est née.",
     "Aujourd'hui, avec la grâce d'Allah et la bénédiction de nos familles, nous unissons nos vies. Nous serions heureux que vous soyez à nos côtés pour célébrer ce moment."
   ],
   events: [
-    { id: 1, titre: "Nikah", sous: "Cérémonie religieuse", date: "2026-11-28", lieu: "", adresse: "", maps: "" },
+    { id: 1, titre: "Takk Diakk", sous: "Cérémonie religieuse", date: "2026-11-28", lieu: "", adresse: "", maps: "" },
     { id: 2, titre: "Walima", sous: "Réception", date: "2026-11-28", lieu: "Centre aéré de la BCEAO", adresse: "Yoff, Dakar",
       maps: "https://www.google.com/maps/search/?api=1&query=Centre%20a%C3%A9r%C3%A9%20BCEAO%20Yoff&query_place_id=ChIJn_iC4G0NwQ4R7BvnTbYlCKs",
       gps: [14.7603929, -17.461401] }
@@ -491,7 +494,8 @@ function render(){
   $("#iSub").innerHTML = esc(CONFIG.marie+" & "+CONFIG.mariee)+(dShort?"<i>·</i>"+esc(dShort):"");
   $("#p1").textContent = (CONFIG.pastilles||[])[0]||"Invitation"; $("#p2").textContent = (CONFIG.pastilles||[])[1]||"Mariage";
   $("#cDate").textContent = dateTxt;
-  $("#hMeta").textContent = (evs[0]?evs[0].titre:"Mariage")+" · "+dateTxt;
+  var dS=parseD(CONFIG.date);
+  $("#hMeta").textContent = (evs[0]?evs[0].titre:"Mariage")+" · "+(dS?dS.toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"}):dateTxt);
   $("#storySign").textContent = $("#merciSign").textContent = CONFIG.mariee+" & "+CONFIG.marie;
   if (INV && INV.name){ $("#cFor").textContent="Pour "+INV.name; $("#hGuest").textContent="À l'attention de "+INV.name; $("#rName").value=INV.name; }
 
