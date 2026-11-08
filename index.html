@@ -70,6 +70,7 @@ section{position:relative;padding:72px 28px;text-align:center}
 .slides{position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden}
 .slides .s{position:absolute;top:0;left:0;right:0;bottom:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.6s ease;
   -webkit-transform:scale(1.08);transform:scale(1.08)}
+.slides video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;-webkit-filter:brightness(.72) saturate(.75) sepia(.25);filter:brightness(.72) saturate(.75) sepia(.25)}
 .slides .s.on{opacity:1;animation:kb 9s ease-out forwards}
 @keyframes kb{from{-webkit-transform:scale(1.12);transform:scale(1.12)}to{-webkit-transform:scale(1);transform:scale(1)}}
 .hero::after{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(25,15,10,.55) 0%,rgba(30,18,12,.35) 40%,rgba(25,15,10,.75) 100%)}
@@ -194,7 +195,8 @@ body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin .
 .warn{font-size:15px;color:#7a4a12;background:#f6e8cc;border-radius:8px;padding:10px 12px;margin-top:12px}
 .toast{position:fixed;left:50%;bottom:90px;-webkit-transform:translateX(-50%);transform:translateX(-50%);background:var(--choco);color:var(--cream);padding:11px 18px;border-radius:30px;z-index:99;font-size:15px;opacity:0;transition:opacity .3s;pointer-events:none}
 .toast.show{opacity:1}
-@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.petal,.seal::after{display:none}.slides .s.on{animation:none}}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.petal,.seal::after{display:none}.slides video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;-webkit-filter:brightness(.72) saturate(.75) sepia(.25);filter:brightness(.72) saturate(.75) sepia(.25)}
+.slides .s.on{animation:none}}
 </style>
 </head>
 <body class="locked">
@@ -372,24 +374,24 @@ body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin .
 const CONFIG = {
   marie: "Lindor",
   mariee: "Zeynab",
-  date: null,                      // ex. "2027-01-16T16:00" — sert au calendrier et au compte à rebours
+  date: "2026-11-28",              // ajouter l'heure dès qu'elle est connue : "2026-11-28T16:00"
   histoire: [
     "Il y a des rencontres qui ne doivent rien au hasard. Deux chemins se sont croisés, puis se sont choisis, et pas à pas, une évidence est née.",
     "Aujourd'hui, avec la grâce d'Allah et la bénédiction de nos familles, nous unissons nos vies. Nous serions heureux que vous soyez à nos côtés pour célébrer ce moment."
   ],
   events: [
-    { id: 1, titre: "Nikah", sous: "Cérémonie religieuse", date: null, lieu: "", adresse: "", maps: "" },
-    { id: 2, titre: "Walima", sous: "Réception", date: null, lieu: "Centre aéré de la BCEAO", adresse: "Yoff, Dakar",
+    { id: 1, titre: "Nikah", sous: "Cérémonie religieuse", date: "2026-11-28", lieu: "", adresse: "", maps: "" },
+    { id: 2, titre: "Walima", sous: "Réception", date: "2026-11-28", lieu: "Centre aéré de la BCEAO", adresse: "Yoff, Dakar",
       maps: "https://www.google.com/maps/search/?api=1&query=Centre%20a%C3%A9r%C3%A9%20BCEAO%20Yoff&query_place_id=ChIJn_iC4G0NwQ4R7BvnTbYlCKs",
       gps: [14.7603929, -17.461401] }
   ],
   repondreAvant: null,
-  hero: ["assets/plage.jpg", "assets/zeynab.jpg", "assets/lindor.jpg"],
+  heroVideo: "assets/video2.mp4", heroPoster: "assets/video2.jpg",
+  hero: ["assets/plage.jpg", "assets/zeynab.jpg", "assets/lindor.jpg"],   // utilisé si pas de vidéo
   galerie: [
     { src: "assets/plage.jpg", legende: "Tendresse" },
     { src: "assets/video1.mp4", poster: "assets/video1.jpg", legende: "Complicité" },
     { src: "assets/zeynab.jpg", legende: "Douceur" },
-    { src: "assets/video2.mp4", poster: "assets/video2.jpg", legende: "Bonheur" },
     { src: "assets/lindor.jpg", legende: "Promesse" }
   ],
   merciPhoto: "assets/plage.jpg",
@@ -440,7 +442,10 @@ function render(){
   if (INV && INV.name){ $("#cFor").textContent="Pour "+INV.name; $("#hGuest").textContent="À l'attention de "+INV.name; $("#rName").value=INV.name; }
 
   // hero : diaporama
-  $("#slides").innerHTML = CONFIG.hero.map(function(src,i){ return '<div class="s'+(i?'':' on')+'" style="background-image:url(\''+src+'\')"></div>'; }).join("");
+  if (CONFIG.heroVideo){
+    $("#slides").innerHTML = '<video id="heroV" muted loop playsinline webkit-playsinline autoplay preload="auto" poster="'+CONFIG.heroPoster+'" src="'+CONFIG.heroVideo+'"></video>';
+    var hv=$("#heroV"); hv.muted=true; var pp=hv.play(); if(pp&&pp.catch) pp.catch(function(){});
+  } else $("#slides").innerHTML = CONFIG.hero.map(function(src,i){ return '<div class="s'+(i?'':' on')+'" style="background-image:url(\''+src+'\')"></div>'; }).join("");
   var si=0, sl=document.querySelectorAll("#slides .s");
   if (sl.length>1) setInterval(function(){ sl[si].classList.remove("on"); si=(si+1)%sl.length; void sl[si].offsetWidth; sl[si].classList.add("on"); },6000);
 
@@ -483,7 +488,7 @@ function render(){
 
   // programme
   $("#events").innerHTML = evs.map(function(e){
-    var when = e.date ? fmtDate(e.date) : '<span class="tbc">Date et heure communiquées prochainement</span>';
+    var when = e.date ? fmtDate(e.date)+(/T\d/.test(e.date)?'':'<br><span class="tbc">Heure à confirmer</span>') : '<span class="tbc">Date et heure communiquées prochainement</span>';
     var where = e.lieu ? '<div class="where">'+esc(e.lieu)+(e.adresse?" · "+esc(e.adresse):"")+'</div>' : '<div class="where tbc">Lieu à confirmer</div>';
     return '<div class="ev reveal"><div class="sub">'+esc(e.sous)+'</div><h3>'+esc(e.titre)+'</h3><div class="when">'+when+'</div>'+where+'</div>';
   }).join("");
@@ -567,6 +572,7 @@ document.addEventListener("visibilitychange",function(){ var a=$("#bg"); if(docu
 var opened=false;
 function openCover(){
   if (opened) return; opened=true; startSound();
+  var hv=document.getElementById("heroV"); if(hv){ hv.muted=true; var q=hv.play(); if(q&&q.catch) q.catch(function(){}); }
   $("#cover").classList.add("open");
   setTimeout(function(){ document.body.classList.remove("locked"); $("#nav").classList.add("show"); window.scrollTo(0,0); }, 1500);
 }
