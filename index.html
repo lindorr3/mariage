@@ -352,12 +352,16 @@ body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin #
       <div id="yesBlock">
         <label class="f" for="rCount">Nombre de personnes</label>
         <select id="rCount"></select>
+        <div id="namesWrap" hidden>
+          <label class="f" for="rNames">Prénoms et noms des personnes présentes</label>
+          <textarea id="rNames" placeholder="Une personne par ligne" style="min-height:80px"></textarea>
+        </div>
         <div id="evChecksWrap" hidden><label class="f">Je serai présent(e) à</label><div class="checks" id="evChecks"></div></div>
         <label class="f" for="rDiet">Allergies ou régime particulier</label>
         <input type="text" id="rDiet" placeholder="Facultatif">
       </div>
-      <label class="f" for="rMsg">Un mot ou une dou'a pour les mariés</label>
-      <textarea id="rMsg" placeholder="Facultatif"></textarea>
+      <label class="f" for="rMsg">Un message, un souhait ou une dou'a pour les mariés</label>
+      <textarea id="rMsg" placeholder="Facultatif — il nous fera très plaisir"></textarea>
       <input type="text" id="hp" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" aria-hidden="true">
       <button type="button" class="btn dark" id="sendSheet" hidden>Envoyer ma réponse</button>
       <a class="btn dark" id="sendWa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span id="waLbl">Répondre par WhatsApp</span></a>
@@ -451,6 +455,7 @@ const CONFIG = {
   ],
   merciPhoto: "assets/plage.jpg",
   whatsapp: "221785342660",
+  vues: false,                     // suivi des ouvertures (activer après mise à jour du script v2)
   sheet: "https://script.google.com/macros/s/AKfycby4XD3C-6ZXKx5C0e7rj0A9g6qvvMW4_5HA-KjtijzSVsChxETqhZ81K9Z4E6nHj5S_/exec",                       // adresse du script Google (…/exec) — les réponses arrivent dans le Google Sheet
   email: "",
   audio: "assets/audio.mp3",       // Al-Wâqi'a (extrait), Omar Hisham — joué une fois
@@ -584,7 +589,14 @@ function render(){
   }
   ["#sendWa","#sendMail"].forEach(function(s){ $(s).addEventListener("click",function(){ if(!CONFIG.sheet) setTimeout(function(){ $("#thanks").classList.add("show"); },400); }); });
 
-  observe(); navSpy();
+  observe(); navSpy(); trackView();
+}
+function trackView(){
+  if (!CONFIG.sheet || !CONFIG.vues) return;
+  var k="vu:"+(INV&&INV.name?INV.name:"general");
+  try{ if(localStorage.getItem(k)) return; localStorage.setItem(k,"1"); }catch(e){}
+  var ua=navigator.userAgent, dev=/iPhone|iPad/.test(ua)?"iPhone":(/Android/.test(ua)?"Android":"Ordinateur/autre");
+  try{ fetch(CONFIG.sheet,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({type:"view",invite:INV&&INV.name?INV.name:"",device:dev})}).catch(function(){}); }catch(e){}
 }
 function tick(){
   var s=Math.max(0,(parseD(CONFIG.date)-new Date())/1000), d=Math.floor(s/86400); s-=d*86400; var h=Math.floor(s/3600); s-=h*3600; var m=Math.floor(s/60); s=Math.floor(s-m*60);
@@ -596,6 +608,7 @@ function rsvpText(){
   if (yes){ L.push("Présence : Oui, in shā' Allah","Nombre de personnes : "+$("#rCount").value);
     var ch=[].slice.call(document.querySelectorAll("#evChecks input"));
     if (ch.length) L.push("Présent(e) à : "+(ch.filter(function(c){return c.checked;}).map(function(c){return c.value;}).join(", ")||"—"));
+    if (+$("#rCount").value>1 && $("#rNames").value.trim()) L.push("Personnes : "+$("#rNames").value.split(/\n+/).map(function(x){return x.trim();}).filter(Boolean).join(", "));
     if ($("#rDiet").value.trim()) L.push("Régime / allergies : "+$("#rDiet").value.trim());
   } else L.push("Présence : Ne pourra pas venir");
   if ($("#rMsg").value.trim()) L.push("","Message : "+$("#rMsg").value.trim());
@@ -606,7 +619,8 @@ function sendSheet(){
   if(!name){ toast("Indiquez votre nom"); $("#rName").focus(); return; }
   var yes=$("#attY").checked, ch=[].slice.call(document.querySelectorAll("#evChecks input"));
   var data={ invite: INV&&INV.name?INV.name:"", seats: INV?INV.seats:"", name:name, att: yes?"yes":"no", count: yes?$("#rCount").value:0,
-    diet: yes?$("#rDiet").value.trim():"", msg:$("#rMsg").value.trim(), website:$("#hp").value };
+    diet: yes?$("#rDiet").value.trim():"", msg:$("#rMsg").value.trim(), website:$("#hp").value,
+    names: yes&&+$("#rCount").value>1 ? $("#rNames").value.split(/\n+/).map(function(x){return x.trim();}).filter(Boolean).join(", ") : "" };
   b.disabled=true; b.textContent="Envoi…";
   fetch(CONFIG.sheet,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)})
     .then(function(){
@@ -620,6 +634,7 @@ function sendSheet(){
 }
 function updateRsvp(){
   $("#yesBlock").style.display = $("#attY").checked ? "" : "none";
+  $("#namesWrap").hidden = +$("#rCount").value < 2;
   var t=rsvpText();
   $("#sendWa").href="https://wa.me/"+(CONFIG.whatsapp||"")+"?text="+encodeURIComponent(t);
   if (CONFIG.email) $("#sendMail").href="mailto:"+CONFIG.email+"?subject="+encodeURIComponent("Réponse — mariage "+CONFIG.marie+" & "+CONFIG.mariee)+"&body="+encodeURIComponent(t);
