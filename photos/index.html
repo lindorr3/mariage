@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#F3EDE3">
+<title>Partagez vos photos — Lindor & Zeynab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:only light;--cream:#F3EDE3;--paper:#FBF8F3;--sand:#D9CBB6;--choco:#3A2820;--terra:#A65D3F;--gold:#B8955A;--muted:#7A6A5E;--ok:#6E8B3D}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{color-scheme:only light}
+body{font-family:"Cormorant Garamond",Georgia,serif;background:var(--cream);color:var(--choco);font-size:19px;line-height:1.55;min-height:100vh}
+.wrap{max-width:520px;margin:0 auto;padding:calc(36px + env(safe-area-inset-top)) 22px calc(40px + env(safe-area-inset-bottom));text-align:center}
+.k{font-family:"Montserrat",Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+h1{font-family:"Great Vibes",cursive;font-weight:400;font-size:clamp(46px,13vw,62px);line-height:1.1;margin:10px 0 4px}
+h1 span{color:var(--terra)}
+.sub{font-family:"Montserrat",Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.lead{margin:22px 0 6px;font-size:20px}
+label.f{display:block;text-align:left;font-family:"Montserrat",Arial,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:22px 0 6px}
+input[type=text]{width:100%;font-family:inherit;font-size:19px;padding:13px 14px;border:1px solid var(--sand);border-radius:12px;background:var(--paper);color:var(--choco);outline:none;-webkit-appearance:none}
+input[type=text]:focus{border-color:var(--terra)}
+.pick{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-top:18px;padding:30px 16px;border:1.5px dashed var(--gold);border-radius:18px;background:var(--paper);cursor:pointer}
+.pick svg{width:46px;height:46px;color:var(--terra)}
+.pick b{font-family:"Montserrat",Arial,sans-serif;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+.pick small{color:var(--muted);font-size:15px}
+#files{position:absolute;left:-9999px;opacity:0}
+.list{margin-top:18px;text-align:left}
+.it{display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;background:var(--paper);border:1px solid #E8DDCB;margin-top:8px}
+.it .th{width:52px;height:52px;border-radius:8px;object-fit:cover;background:var(--sand);flex:none}
+.it .nm{flex:1;min-width:0;font-family:"Montserrat",Arial,sans-serif;font-size:12px;color:var(--muted)}
+.it .nm b{display:block;color:var(--choco);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar{height:4px;border-radius:2px;background:#E8DDCB;margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--terra);transition:width .3s}
+.it.ok .bar i{background:var(--ok);width:100%}
+.it.err .bar i{background:#B3261E;width:100%}
+.st{flex:none;font-size:20px;width:24px;text-align:center}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;margin-top:18px;padding:16px;border:0;border-radius:12px;font-family:"Montserrat",Arial,sans-serif;font-size:13px;letter-spacing:.18em;text-transform:uppercase;background:var(--choco);color:var(--cream);cursor:pointer;-webkit-appearance:none}
+.btn:disabled{opacity:.5}
+.done{display:none;margin-top:20px;padding:18px;border-radius:14px;border:1px solid var(--gold);background:var(--paper)}
+.done.show{display:block}
+.done b{font-family:"Great Vibes",cursive;font-weight:400;font-size:34px;color:var(--terra)}
+.note{margin-top:16px;font-size:15px;font-style:italic;color:var(--muted)}
+a.back{display:inline-block;margin-top:26px;font-family:"Montserrat",Arial,sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="k">Le jour J</div>
+  <h1>Lindor <span>&amp;</span> Zeynab</h1>
+  <div class="sub">Takk Diakk · 28 novembre 2026</div>
+  <p class="lead">Un sourire, un instant volé, un fou rire&nbsp;: partagez vos photos et vidéos avec nous.</p>
+
+  <label class="f" for="from">Votre prénom (facultatif)</label>
+  <input type="text" id="from" placeholder="Pour savoir qui remercier" autocomplete="given-name">
+  <input type="text" id="hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0" aria-hidden="true">
+
+  <label class="pick" for="files">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.6"/></svg>
+    <b>Choisir des photos ou vidéos</b>
+    <small>Plusieurs à la fois, c'est possible</small>
+  </label>
+  <input type="file" id="files" accept="image/*,video/*" multiple>
+
+  <div class="list" id="list"></div>
+  <button class="btn" id="send" hidden>Envoyer</button>
+  <div class="done" id="done"><b>Jërëjëf !</b><p id="doneTxt"></p></div>
+  <p class="note">Les vidéos de plus de 40 Mo sont trop lourdes pour cette page : envoyez-les-nous par WhatsApp.</p>
+  <a class="back" href="/">← Revenir à l'invitation</a>
+</div>
+
+<script>
+var ENDPOINT = "https://script.google.com/macros/s/AKfycby4XD3C-6ZXKx5C0e7rj0A9g6qvvMW4_5HA-KjtijzSVsChxETqhZ81K9Z4E6nHj5S_/exec";
+var MAX_VIDEO = 40 * 1024 * 1024, MAX_SIDE = 2560, QUALITY = 0.86;
+var $ = function(s){ return document.querySelector(s); };
+var queue = [];
+try { $("#from").value = localStorage.getItem("photoFrom") || ""; } catch(e){}
+
+$("#files").addEventListener("change", function(){
+  [].slice.call(this.files).forEach(function(f){
+    var it = document.createElement("div"); it.className = "it";
+    var isImg = /^image\//.test(f.type), isVid = /^video\//.test(f.type);
+    var th = isImg ? '<img class="th" alt="">' : '<div class="th"></div>';
+    it.innerHTML = th + '<div class="nm"><b></b><span></span><div class="bar"><i></i></div></div><div class="st"></div>';
+    it.querySelector("b").textContent = f.name || (isVid ? "vidéo" : "photo");
+    it.querySelector(".nm span").textContent = (f.size/1048576).toFixed(1) + " Mo" + (isVid ? " · vidéo" : "");
+    if (isImg) { try { it.querySelector("img").src = URL.createObjectURL(f); } catch(e){} }
+    $("#list").appendChild(it);
+    var job = { file: f, el: it, done: false };
+    if (!isImg && !isVid) { fail(job, "Format non pris en charge"); job.done = true; }
+    else if (isVid && f.size > MAX_VIDEO) { fail(job, "Trop lourde : envoyez-la par WhatsApp"); job.done = true; }
+    queue.push(job);
+  });
+  this.value = "";
+  $("#send").hidden = !queue.some(function(j){ return !j.done; });
+  $("#done").classList.remove("show");
+});
+
+$("#send").addEventListener("click", function(){
+  var b = this; b.disabled = true; b.textContent = "Envoi en cours…";
+  try { localStorage.setItem("photoFrom", $("#from").value.trim()); } catch(e){}
+  var todo = queue.filter(function(j){ return !j.done; }), ok = 0, ko = 0, i = 0, actifs = 0;
+  function next(){
+    if (i >= todo.length) {
+      if (actifs > 0) return;
+      b.disabled = false; b.textContent = "Envoyer"; b.hidden = !queue.some(function(j){ return !j.done; });
+      $("#doneTxt").textContent = ok + (ok > 1 ? " fichiers envoyés" : " fichier envoyé") + (ko ? " · " + ko + " en échec (vous pouvez réessayer)" : "") + ". Merci d'immortaliser ce jour avec nous !";
+      $("#done").classList.add("show"); return;
+    }
+    var job = todo[i++]; actifs++;
+    upload(job).then(function(){ actifs--; ok++; job.done = true; next(); }, function(msg){ actifs--; ko++; fail(job, msg || "Échec, réessayez"); next(); });
+  }
+  next(); next();   // deux envois en parallèle
+});
+
+function fail(job, msg){ setP(job, 100); job.el.classList.add("err"); job.el.querySelector(".st").textContent = "⚠️"; job.el.querySelector(".nm span").textContent = msg; }
+function setP(job, p){ job.el.querySelector(".bar i").style.width = Math.round(p) + "%"; }
+
+function upload(job){
+  job.el.classList.remove("err"); job.el.querySelector(".st").textContent = "";
+  setP(job, 8);
+  return prepare(job.file).then(function(p){
+    setP(job, 35);
+    var body = JSON.stringify({ type: "photo", from: $("#from").value.trim(), name: p.name, mime: p.mime, data: p.data, website: $("#hp").value });
+    var t = setInterval(function(){ var w = parseFloat(job.el.querySelector(".bar i").style.width) || 35; if (w < 90) setP(job, w + 4); }, 400);
+    return fetch(ENDPOINT, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: body })
+      .then(function(r){ return r.json(); })
+      .then(function(res){ clearInterval(t); if (res && res.ok) { setP(job, 100); job.el.classList.add("ok"); job.el.querySelector(".st").textContent = "✓"; } else throw (res && res.erreur === "taille" ? "Fichier trop lourd" : "Échec, réessayez"); },
+            function(e){ clearInterval(t); throw (typeof e === "string" ? e : "Pas de connexion, réessayez"); });
+  });
+}
+
+/* Réduit les photos (plus rapide en 4G), garde les vidéos telles quelles */
+function prepare(f){
+  return new Promise(function(resolve){
+    function raw(){ var r = new FileReader(); r.onload = function(){ resolve({ name: f.name || "fichier", mime: f.type || "application/octet-stream", data: String(r.result).split(",")[1] }); }; r.readAsDataURL(f); }
+    if (!/^image\//.test(f.type) || /gif$/.test(f.type)) return raw();
+    var img = new Image(), url = URL.createObjectURL(f);
+    img.onload = function(){
+      try {
+        var w = img.naturalWidth, h = img.naturalHeight, k = Math.min(1, MAX_SIDE / Math.max(w, h));
+        if (k === 1 && f.size < 3 * 1048576) { URL.revokeObjectURL(url); return raw(); }
+        var c = document.createElement("canvas"); c.width = Math.round(w * k); c.height = Math.round(h * k);
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+        var d = c.toDataURL("image/jpeg", QUALITY);
+        resolve({ name: (f.name || "photo").replace(/\.[^.]+$/, "") + ".jpg", mime: "image/jpeg", data: d.split(",")[1] });
+      } catch(e){ raw(); }
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); raw(); };
+    img.src = url;
+  });
+}
+</script>
+</body>
+</html>
