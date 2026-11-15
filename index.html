@@ -358,7 +358,9 @@ body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin #
       </div>
       <label class="f" for="rMsg">Un mot ou une dou'a pour les mariés</label>
       <textarea id="rMsg" placeholder="Facultatif"></textarea>
-      <a class="btn dark" id="sendWa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>Répondre par WhatsApp</a>
+      <input type="text" id="hp" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" aria-hidden="true">
+      <button type="button" class="btn dark" id="sendSheet" hidden>Envoyer ma réponse</button>
+      <a class="btn dark" id="sendWa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span id="waLbl">Répondre par WhatsApp</span></a>
       <a class="btn line" id="sendMail" target="_blank" rel="noopener" hidden>Répondre par e-mail</a>
       <p class="note" id="sendNote"></p>
       <div class="thanks" id="thanks">Jërëjëf · Jazākum Allāhu khayran<br><small>Votre message s'est ouvert dans votre application : pensez à appuyer sur « Envoyer ».</small></div>
@@ -449,6 +451,7 @@ const CONFIG = {
   ],
   merciPhoto: "assets/plage.jpg",
   whatsapp: "221785342660",
+  sheet: "",                       // adresse du script Google (…/exec) — les réponses arrivent dans le Google Sheet
   email: "",
   audio: "assets/audio.mp3",       // Al-Wâqi'a (extrait), Omar Hisham — joué une fois
   url: "https://lindor-zeynab.cloud/"
@@ -573,7 +576,13 @@ function render(){
   $("#sendNote").textContent = CONFIG.whatsapp ? "Votre réponse s'ouvre dans WhatsApp, prête à être envoyée aux mariés." : "Votre réponse s'ouvre dans WhatsApp : choisissez Lindor ou Zeynab comme destinataire.";
   ["input","change"].forEach(function(ev){ $("#rsvpForm").addEventListener(ev,updateRsvp); });
   updateRsvp();
-  ["#sendWa","#sendMail"].forEach(function(s){ $(s).addEventListener("click",function(){ setTimeout(function(){ $("#thanks").classList.add("show"); },400); }); });
+  if (CONFIG.sheet){
+    $("#sendSheet").hidden=false; $("#sendWa").className="btn line"; $("#waLbl").textContent="Prévenir aussi les mariés sur WhatsApp";
+    $("#sendNote").textContent="Votre réponse est enregistrée directement auprès des mariés.";
+    try{ if(localStorage.getItem("rsvpSent")) $("#sendNote").textContent="Vous avez déjà répondu. Vous pouvez modifier et renvoyer votre réponse si besoin."; }catch(e){}
+    $("#sendSheet").addEventListener("click",sendSheet);
+  }
+  ["#sendWa","#sendMail"].forEach(function(s){ $(s).addEventListener("click",function(){ if(!CONFIG.sheet) setTimeout(function(){ $("#thanks").classList.add("show"); },400); }); });
 
   observe(); navSpy();
 }
@@ -591,6 +600,23 @@ function rsvpText(){
   } else L.push("Présence : Ne pourra pas venir");
   if ($("#rMsg").value.trim()) L.push("","Message : "+$("#rMsg").value.trim());
   return L.join("\n");
+}
+function sendSheet(){
+  var b=$("#sendSheet"), name=$("#rName").value.trim();
+  if(!name){ toast("Indiquez votre nom"); $("#rName").focus(); return; }
+  var yes=$("#attY").checked, ch=[].slice.call(document.querySelectorAll("#evChecks input"));
+  var data={ invite: INV&&INV.name?INV.name:"", seats: INV?INV.seats:"", name:name, att: yes?"yes":"no", count: yes?$("#rCount").value:0,
+    diet: yes?$("#rDiet").value.trim():"", msg:$("#rMsg").value.trim(), website:$("#hp").value };
+  b.disabled=true; b.textContent="Envoi…";
+  fetch(CONFIG.sheet,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)})
+    .then(function(){
+      try{ localStorage.setItem("rsvpSent","1"); }catch(e){}
+      b.textContent="Réponse envoyée ✓";
+      $("#thanks").innerHTML = yes ? "Jërëjëf · Jazākum Allāhu khayran<br><small>Votre réponse est bien enregistrée. À très vite, in shā' Allah.</small>" : "Jërëjëf pour votre réponse<br><small>Vous nous manquerez. Merci pour vos prières.</small>";
+      $("#thanks").classList.add("show");
+      setTimeout(function(){ b.disabled=false; b.textContent="Renvoyer ma réponse"; },4000);
+    })
+    .catch(function(){ b.disabled=false; b.textContent="Envoyer ma réponse"; toast("Pas de connexion : réessayez, ou répondez par WhatsApp"); });
 }
 function updateRsvp(){
   $("#yesBlock").style.display = $("#attY").checked ? "" : "none";
