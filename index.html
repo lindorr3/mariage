@@ -355,10 +355,6 @@ body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin #
       <div id="yesBlock">
         <label class="f" for="rCount">Nombre de personnes</label>
         <select id="rCount"></select>
-        <div id="namesWrap" hidden>
-          <label class="f" for="rNames">Prénoms et noms des personnes présentes</label>
-          <textarea id="rNames" placeholder="Une personne par ligne" style="min-height:80px"></textarea>
-        </div>
         <div id="evChecksWrap" hidden><label class="f">Je serai présent(e) à</label><div class="checks" id="evChecks"></div></div>
         <label class="f" for="rDiet">Allergies ou régime particulier</label>
         <input type="text" id="rDiet" placeholder="Facultatif">
@@ -617,7 +613,6 @@ function rsvpText(){
   if (yes){ L.push("Présence : Oui, in shā' Allah","Nombre de personnes : "+$("#rCount").value);
     var ch=[].slice.call(document.querySelectorAll("#evChecks input"));
     if (ch.length) L.push("Présent(e) à : "+(ch.filter(function(c){return c.checked;}).map(function(c){return c.value;}).join(", ")||"—"));
-    if (+$("#rCount").value>1 && $("#rNames").value.trim()) L.push("Personnes : "+$("#rNames").value.split(/\n+/).map(function(x){return x.trim();}).filter(Boolean).join(", "));
     if ($("#rDiet").value.trim()) L.push("Régime / allergies : "+$("#rDiet").value.trim());
   } else L.push("Présence : Ne pourra pas venir");
   if ($("#rMsg").value.trim()) L.push("","Message : "+$("#rMsg").value.trim());
@@ -629,7 +624,7 @@ function sendSheet(){
   var yes=$("#attY").checked, ch=[].slice.call(document.querySelectorAll("#evChecks input"));
   var data={ invite: INV&&INV.name?INV.name:"", seats: INV?INV.seats:"", name:name, att: yes?"yes":"no", count: yes?$("#rCount").value:0,
     diet: yes?$("#rDiet").value.trim():"", msg:$("#rMsg").value.trim(), website:$("#hp").value,
-    names: yes&&+$("#rCount").value>1 ? $("#rNames").value.split(/\n+/).map(function(x){return x.trim();}).filter(Boolean).join(", ") : "" };
+    names: "" };
   b.disabled=true; b.textContent="Envoi…";
   fetch(CONFIG.sheet,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)})
     .then(function(){
@@ -643,7 +638,6 @@ function sendSheet(){
 }
 function updateRsvp(){
   $("#yesBlock").style.display = $("#attY").checked ? "" : "none";
-  $("#namesWrap").hidden = +$("#rCount").value < 2;
   var t=rsvpText();
   $("#sendWa").href="https://wa.me/"+(CONFIG.whatsapp||"")+"?text="+encodeURIComponent(t);
   if (CONFIG.email) $("#sendMail").href="mailto:"+CONFIG.email+"?subject="+encodeURIComponent("Réponse — mariage "+CONFIG.marie+" & "+CONFIG.mariee)+"&body="+encodeURIComponent(t);
