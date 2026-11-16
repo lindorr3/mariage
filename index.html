@@ -605,7 +605,7 @@ function render(){
       if(bgWas){ bgWas=false; var bg=$("#bg"); if(bg && !bg.ended){ var p=bg.play(); if(p&&p.catch) p.catch(function(){}); } } }
     function go(d){ if(list.length<2) return; i=(i+d+list.length)%list.length; show(); }
     window.__lb={open:open};
-    $("#gal").querySelectorAll("figure").forEach(function(f,k){ f.addEventListener("click",function(){ open(CONFIG.galerie,k); }); });
+    $("#gal").querySelectorAll("figure").forEach(function(f,k){ f.addEventListener("click",function(){ open([CONFIG.galerie[k]],0); }); });
     $("#merciImg").addEventListener("click",function(){ open([{src:CONFIG.merciPhoto,legende:""}],0); });
     lb.querySelector(".x").addEventListener("click",close);
     lb.querySelector(".pv").addEventListener("click",function(e){ e.stopPropagation(); go(-1); });
