@@ -124,6 +124,20 @@ section{position:relative;padding:72px 28px;text-align:center}
 .dots{display:flex;gap:6px;justify-content:center;margin-top:4px}
 .dots i{width:6px;height:6px;border-radius:50%;background:var(--sand);transition:all .3s}
 .dots i.on{background:var(--terra);width:16px;border-radius:4px}
+.gal figure,#merciImg{cursor:zoom-in}
+.galhint{text-align:center;font-size:12px;letter-spacing:.06em;color:var(--muted,#8a7a6a);margin-top:10px;opacity:.85}
+/* visionneuse plein écran */
+.lb{position:fixed;inset:0;z-index:300;background:#140e0a;display:none;flex-direction:column;align-items:center;justify-content:center;touch-action:pan-y;color:#f4ece0}
+.lb.open{display:flex;animation:lbIn .25s ease}
+@keyframes lbIn{from{opacity:0}to{opacity:1}}
+.lb .stage{position:relative;width:100%;flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.lb img,.lb video{max-width:100%;max-height:100%;object-fit:contain;display:block;transition:transform .25s ease,opacity .2s}
+.lb .cap{font-family:"Great Vibes",cursive;font-size:30px;padding:8px 0 4px;min-height:44px}
+.lb .cnt{font-size:12px;letter-spacing:.12em;opacity:.6;padding-bottom:max(14px,env(safe-area-inset-bottom))}
+.lb button{position:absolute;background:rgba(255,255,255,.12);border:0;color:#fff;width:44px;height:44px;border-radius:50%;font-size:24px;line-height:44px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.lb .x{top:max(14px,env(safe-area-inset-top));right:14px;z-index:2}
+.lb .pv{left:10px;top:50%;margin-top:-22px}.lb .nx{right:10px;top:50%;margin-top:-22px}
+.lb.single .pv,.lb.single .nx,.lb.single .cnt{display:none}
 
 /* programme + compte à rebours */
 .prog{background:var(--paper)}
@@ -324,6 +338,7 @@ body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin #
     <h2 class="title reveal">La galerie</h2>
     <div class="gal" id="gal"></div>
     <div class="dots" id="dots"></div>
+    <div class="galhint reveal">Touchez une photo pour l'agrandir</div>
   </section>
 
   <section class="prog" id="programme">
@@ -404,6 +419,12 @@ body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin #
 </button>
 <audio id="bg" preload="none" playsinline></audio>
 <div class="toast" id="toast"></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo en grand">
+  <button class="x" aria-label="Fermer">&times;</button>
+  <div class="stage" id="lbStage"></div>
+  <button class="pv" aria-label="Précédente">&#8249;</button><button class="nx" aria-label="Suivante">&#8250;</button>
+  <div class="cap" id="lbCap"></div><div class="cnt" id="lbCnt"></div>
+</div>
 
 <!-- ====================== ESPACE DES MARIÉS (#organisateurs) ====================== -->
 <div id="admin">
@@ -566,6 +587,37 @@ function render(){
       if(e.isIntersecting){ if(!v.src) v.src=v.dataset.src; var pr=v.play(); if(pr&&pr.catch) pr.catch(function(){}); } else v.pause(); }); },{threshold:.5});
     document.querySelectorAll("#gal video").forEach(function(v){ vio.observe(v); });
   }
+
+  // visionneuse plein écran
+  (function(){
+    var lb=$("#lb"), st=$("#lbStage"), list=[], i=0, bgWas=false, x0=null, y0=0;
+    function show(){ var g=list[i], bg=$("#bg");
+      st.innerHTML = /\.mp4$/i.test(g.src)
+        ? '<video controls playsinline webkit-playsinline autoplay poster="'+g.poster+'" src="'+g.src+'"></video>'
+        : '<img src="'+g.src+'" alt="'+esc(g.legende||"")+'">';
+      var v=st.querySelector("video");
+      if(v){ if(bg && !bg.paused){ bg.pause(); bgWas=true; } var p=v.play(); if(p&&p.catch) p.catch(function(){}); }
+      $("#lbCap").textContent=g.legende||""; $("#lbCnt").textContent=(i+1)+" / "+list.length;
+      if(list[i+1] && !/\.mp4$/i.test(list[i+1].src)) (new Image()).src=list[i+1].src; }
+    function open(l,k){ list=l; i=k; lb.classList.toggle("single",l.length<2); lb.classList.add("open");
+      document.body.style.overflow="hidden"; document.querySelectorAll("#gal video").forEach(function(v){v.pause();}); show(); }
+    function close(){ lb.classList.remove("open"); st.innerHTML=""; document.body.style.overflow="";
+      if(bgWas){ bgWas=false; var bg=$("#bg"); if(bg && !bg.ended){ var p=bg.play(); if(p&&p.catch) p.catch(function(){}); } } }
+    function go(d){ if(list.length<2) return; i=(i+d+list.length)%list.length; show(); }
+    window.__lb={open:open};
+    $("#gal").querySelectorAll("figure").forEach(function(f,k){ f.addEventListener("click",function(){ open(CONFIG.galerie,k); }); });
+    $("#merciImg").addEventListener("click",function(){ open([{src:CONFIG.merciPhoto,legende:""}],0); });
+    lb.querySelector(".x").addEventListener("click",close);
+    lb.querySelector(".pv").addEventListener("click",function(e){ e.stopPropagation(); go(-1); });
+    lb.querySelector(".nx").addEventListener("click",function(e){ e.stopPropagation(); go(1); });
+    st.addEventListener("click",function(e){ if(e.target===st) close(); });
+    document.addEventListener("keydown",function(e){ if(!lb.classList.contains("open")) return;
+      if(e.key==="Escape") close(); else if(e.key==="ArrowRight") go(1); else if(e.key==="ArrowLeft") go(-1); });
+    st.addEventListener("touchstart",function(e){ if(e.touches.length===1){ x0=e.touches[0].clientX; y0=e.touches[0].clientY; } },{passive:true});
+    st.addEventListener("touchend",function(e){ if(x0===null) return; var t=e.changedTouches[0], dx=t.clientX-x0, dy=t.clientY-y0; x0=null;
+      if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)) go(dx<0?1:-1); else if(dy>90 && Math.abs(dy)>Math.abs(dx)) close(); },{passive:true});
+    window.addEventListener("popstate",function(){ if(lb.classList.contains("open")) close(); });
+  })();
 
   // programme
   $("#events").innerHTML = evs.map(function(e){
