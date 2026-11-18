@@ -162,7 +162,7 @@ section{position:relative;padding:72px 28px;text-align:center}
 .btn.terra{background:var(--terra);color:#fff}
 .btn.line{background:transparent;color:var(--choco);border:1px solid var(--choco)}
 .btn.yango{background:#FC3F1D;color:#fff}
-.places{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px -10px 0}
+.places{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px -10px 0}
 .place{padding:14px 6px 8px;background:var(--cream);border-radius:12px;border:1px solid rgba(184,149,90,.35);text-align:center;display:flex;flex-direction:column;cursor:pointer;transition:border-color .25s,box-shadow .25s}
 .place.sel{border-color:var(--terra);box-shadow:0 6px 18px rgba(60,40,30,.14)}
 .place .num{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);line-height:1.3}
@@ -653,7 +653,7 @@ function render(){
     function showMap(k){ var l=LX[k];
       $("#map").innerHTML='<iframe loading="lazy" title="Plan — '+esc(l.nom)+'" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q='+l.gps[0]+','+l.gps[1]+'&z=15&hl=fr&output=embed"></iframe>';
       document.querySelectorAll("#places .place").forEach(function(x,i){ x.classList.toggle("sel",i===k); }); }
-    $("#places").style.gridTemplateColumns="repeat("+Math.min(LX.length,3)+",1fr)";
+    $("#places").style.gridTemplateColumns="repeat("+Math.min(LX.length,3)+",minmax(0,1fr))";
     $("#places").innerHTML = LX.map(function(l){
       return '<div class="place">'+(l.sous?'<div class="num">'+esc(l.sous)+'</div>':'')+'<h3>'+esc(l.nom)+'</h3>'+
         (l.adresse?'<div class="adr">'+esc(l.adresse)+'</div>':'')+
