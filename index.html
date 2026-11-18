@@ -163,8 +163,13 @@ section{position:relative;padding:72px 28px;text-align:center}
 .btn.line{background:transparent;color:var(--choco);border:1px solid var(--choco)}
 .btn.yango{background:#FC3F1D;color:#fff}
 .places{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px -10px 0}
-.place{padding:14px 6px 8px;background:var(--cream);border-radius:12px;border:1px solid rgba(184,149,90,.35);text-align:center;display:flex;flex-direction:column;cursor:pointer;transition:border-color .25s,box-shadow .25s}
-.place.sel{border-color:var(--terra);box-shadow:0 6px 18px rgba(60,40,30,.14)}
+.place{position:relative;padding:14px 6px 8px;background:var(--cream);border-radius:12px;border:1px solid rgba(184,149,90,.35);text-align:center;display:flex;flex-direction:column;cursor:pointer;transition:border-color .3s,box-shadow .3s,background .3s}
+.place .num,.place h3,.place .adr{opacity:.55;transition:opacity .3s}
+.place.sel .num,.place.sel h3,.place.sel .adr{opacity:1}
+.place.sel{border:1.5px solid var(--terra);background:#fffaf3;box-shadow:0 6px 18px rgba(60,40,30,.14)}
+.place.sel::before{content:"";position:absolute;top:-7px;left:50%;width:12px;height:12px;margin-left:-6px;background:#fffaf3;border-left:1.5px solid var(--terra);border-top:1.5px solid var(--terra);transform:rotate(45deg)}
+.mapcap{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0 2px;font-size:14px;color:var(--choco);min-height:20px}
+.mapcap svg{width:15px;height:15px;color:var(--terra);flex:none}
 .place .num{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);line-height:1.3}
 .place h3{font-family:"Great Vibes",cursive;font-weight:400;font-size:23px;color:var(--terra);line-height:1.05;margin:4px 0 2px}
 .place .adr{color:var(--muted);font-size:12px;line-height:1.3;flex:1}
@@ -366,8 +371,9 @@ body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin #
     <div class="eyebrow reveal">Où nous retrouver</div>
     <h2 class="title reveal" id="lieuTitre">Les lieux</h2>
     <div class="map reveal" id="map"></div>
+    <div class="mapcap" id="mapCap"></div>
     <div class="places reveal" id="places"></div>
-    <p class="note reveal" id="yangoNote" hidden>Touchez un lieu pour le voir sur la carte. Pas véhiculé ? Le bouton Yango ouvre l'application avec le lieu déjà indiqué comme destination.</p>
+    <p class="note reveal" id="yangoNote" hidden>Touchez un lieu pour le voir sur la carte. Pas véhiculé&nbsp;? Le bouton Yango ouvre l'application avec le lieu déjà indiqué comme destination.</p>
     <a class="btn terra reveal" href="#reponse">Confirmer ma présence</a>
   </section>
 
@@ -652,7 +658,8 @@ function render(){
     function mapsUrl(l){ return l.maps || ("https://www.google.com/maps/search/?api=1&query="+l.gps[0]+","+l.gps[1]); }
     function showMap(k){ var l=LX[k];
       $("#map").innerHTML='<iframe loading="lazy" title="Plan — '+esc(l.nom)+'" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q='+l.gps[0]+','+l.gps[1]+'&z=15&hl=fr&output=embed"></iframe>';
-      document.querySelectorAll("#places .place").forEach(function(x,i){ x.classList.toggle("sel",i===k); }); }
+      $("#mapCap").innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Sur la carte : <b>'+esc(l.nom)+'</b></span>';
+      document.querySelectorAll("#places .place").forEach(function(x,i){ x.classList.toggle("sel",i===k); x.setAttribute("aria-pressed",i===k); }); }
     $("#places").style.gridTemplateColumns="repeat("+Math.min(LX.length,3)+",minmax(0,1fr))";
     $("#places").innerHTML = LX.map(function(l){
       return '<div class="place">'+(l.sous?'<div class="num">'+esc(l.sous)+'</div>':'')+'<h3>'+esc(l.nom)+'</h3>'+
