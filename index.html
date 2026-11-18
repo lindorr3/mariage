@@ -38,6 +38,7 @@ body.locked{overflow:hidden;height:100%}
 section{position:relative;padding:72px 28px;text-align:center}
 .reveal{opacity:0;-webkit-transform:translateY(22px);transform:translateY(22px);transition:opacity 1s ease,transform 1s ease}
 .reveal.in{opacity:1;-webkit-transform:none;transform:none}
+.calwhen{margin-top:18px;font-size:18px;letter-spacing:.04em;color:var(--choco)}
 .orn{display:block;margin:16px auto;width:120px;height:14px;color:var(--gold)}
 
 /* ========== Couverture : enveloppe & sceau ========== */
@@ -345,6 +346,7 @@ body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin #
     <h2 class="title script reveal">Save the date</h2>
     <div class="month reveal" id="calMonth"></div>
     <div class="cal reveal" id="cal"></div>
+    <p class="calwhen reveal" id="calWhen" hidden></p>
     <p class="soon reveal" id="calSoon" hidden>La date sera dévoilée très bientôt, in shā' Allah.</p>
   </section>
 
@@ -357,11 +359,9 @@ body.admin #admin{display:block} body.admin .page,body.admin #cover,body.admin #
   </section>
 
   <section class="prog" id="programme">
-    <div class="eyebrow reveal">Le programme</div>
-    <h2 class="title reveal">Les célébrations</h2>
-    <div id="events"></div>
+    <div id="events" hidden></div>
     <div id="cdWrap" class="reveal" hidden>
-      <div class="eyebrow" style="margin-top:34px">Jusqu'à notre union</div>
+      <div class="eyebrow">Jusqu'à notre union</div>
       <div class="cd"><div><b id="cdD">0</b><small>jours</small></div><div><b id="cdH">0</b><small>heures</small></div><div><b id="cdM">0</b><small>min</small></div><div><b id="cdS">0</b><small>sec</small></div></div>
       <p class="cdnote">Chaque jour qui passe nous rapproche du grand jour.</p>
     </div>
@@ -640,6 +640,8 @@ function render(){
     window.addEventListener("popstate",function(){ if(lb.classList.contains("open")) close(); });
   })();
 
+  // heure sous le calendrier
+  if (CONFIG.date && /T\d/.test(CONFIG.date)){ $("#calWhen").textContent = fmtDate(CONFIG.date); $("#calWhen").hidden=false; }
   // programme
   $("#events").innerHTML = evs.map(function(e){
     var when = e.date ? fmtDate(e.date)+(/T\d/.test(e.date)?'':'<br><span class="tbc">Heure à confirmer</span>') : '<span class="tbc">Date et heure communiquées prochainement</span>';
